@@ -1,0 +1,8 @@
+[*.cs]
+
+# Analyzers
+dotnet_diagnostic.CA1707.severity = none
+dotnet_diagnostic.MA0051.severity = none
+dotnet_diagnostic.MA0137.severity = none
+dotnet_diagnostic.MEN003.severity = none
+dotnet_diagnostic.VSTHRD200.severity = none
