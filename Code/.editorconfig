@@ -1,4 +1,4 @@
-[*.{csproj,props,targets}]
+[*.{csproj,props,targets,vsixmanifest}]
 
 # Whitespace
 indent_size = 2

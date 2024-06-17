@@ -20,7 +20,17 @@ $Solution = Join-Path $PSScriptRoot "Code" "LineLengthGuard.sln"
 
 if ($Build)
 {
-    dotnet build "$Solution" -c "$Configuration"
+    # VSIX project has to be built with MSBuild.
+    $msBuildLocation = "C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\MSBuild.exe"
+
+    if (Test-Path $msBuildLocation)
+    {
+        . "$msBuildLocation" "$Solution" /t:Restore /t:Build /p:Configuration=$Configuration /v:minimal
+    }
+    else
+    {
+        msbuild "$Solution" /t:Restore /t:Build /p:Configuration=$Configuration /v:minimal
+    }
 }
 
 if ($Test)

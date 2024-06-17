@@ -24,6 +24,9 @@ jobs:
       with:
         dotnet-version: 8.0.x
 
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v2
+
     - name: Build
       run: .\Build.ps1 -Build -Configuration "${{ env.Configuration }}"
 

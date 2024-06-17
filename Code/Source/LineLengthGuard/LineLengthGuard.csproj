@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <AssemblyName>LineLengthGuard</AssemblyName>
-    <NeutralLanguage>en-GB</NeutralLanguage>
   </PropertyGroup>
 
   <PropertyGroup>
