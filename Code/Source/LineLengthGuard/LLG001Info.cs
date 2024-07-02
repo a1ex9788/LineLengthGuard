@@ -30,9 +30,9 @@ namespace LineLengthGuard
             Title,
             MessageFormat,
             Category,
-            DiagnosticSeverity.Warning,
+            DiagnosticSeverity.Error,
             isEnabledByDefault: true,
-            description: Description);
+            Description);
 
         public static readonly ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics = ImmutableArray.Create(Rule);
     }
