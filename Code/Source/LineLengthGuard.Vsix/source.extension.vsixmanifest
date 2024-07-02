@@ -3,7 +3,7 @@
   <Metadata>
     <Identity Id="LineLengthGuard.1ac903f6-8121-4471-98e1-16faf9dbc0fb" Version="1.0" Language="en-GB" Publisher="a1ex9788" />
     <DisplayName>LineLengthGuard</DisplayName>
-    <Description xml:space="preserve">This is a sample diagnostic extension for the .NET Compiler Platform ("Roslyn").</Description>
+    <Description xml:space="preserve">Roslyn analyser that checks if the maximum line length is respected.</Description>
   </Metadata>
   <Installation>
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[15.0,)" />
