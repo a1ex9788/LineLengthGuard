@@ -2,19 +2,21 @@ param (
     [switch]$Build,
     [switch]$Test,
     [switch]$Publish,
+    [switch]$Upload,
 
     [string]$Configuration = "Release",
     [string]$TestResultsDirectory = "TestResults",
     [string]$PublicationDirectory = "Publish",
-    [string]$Version = "9.9"
+    [string]$Version = "9.9",
+    [string]$NuGetApiKey = "API key"
 )
 
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-if ((-not $Build) -and (-not $Test) -and (-not $Publish))
+if ((-not $Build) -and (-not $Test) -and (-not $Publish) -and (-not $Upload))
 {
-    Write-Warning "Activate any flag (-Build | -Test | -Publish) to perform some action."
+    Write-Warning "Activate any flag (-Build | -Test | -Publish | -Upload) to perform some action."
 
     exit 0
 }
@@ -49,4 +51,11 @@ if ($Publish)
 
     dotnet build "$packageProject" -c "$Configuration" `
         /p:GeneratePackageOnBuild=true /p:PackageVersion=$Version /p:PackageOutputPath=$PublicationDirectory
+}
+
+if ($Upload)
+{
+    $package = Join-Path $PublicationDirectory "LineLengthGuard.$Version.nupkg"
+
+    dotnet nuget push "$package" --source "https://api.nuget.org/v3/index.json" --api-key "$NuGetApiKey"
 }

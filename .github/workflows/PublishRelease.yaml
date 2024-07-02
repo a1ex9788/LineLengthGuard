@@ -6,6 +6,9 @@ on:
       version:
         description: "Version of the release (i.e. 1.0.0)"
         required: true
+      nugetApiKey:
+        description: "NuGet API key"
+        required: true
 
 permissions:
   contents: write
@@ -36,6 +39,9 @@ jobs:
 
     - name: Publish
       run: .\Build.ps1 -Publish -Configuration "${{ env.Configuration }}" -Version "${{ inputs.version }}" -PublicationDirectory "${{ env.PublicationDirectory }}"
+
+    - name: Upload
+      run: .\Build.ps1 -Upload -Version "${{ inputs.version }}" -PublicationDirectory "${{ env.PublicationDirectory }}" -NuGetApiKey "${{ inputs.nugetApiKey }}"
 
     - name: Zip
       shell: pwsh
