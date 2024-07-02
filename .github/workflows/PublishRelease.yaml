@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Version of the release (i.e. 1.0)"
+        description: "Version of the release (i.e. 1.0.0)"
         required: true
 
 permissions:
@@ -35,7 +35,7 @@ jobs:
         dotnet-version: 8.0.x
 
     - name: Publish
-      run: .\Build.ps1 -Publish -Configuration "${{ env.Configuration }}" -Version ${{ inputs.version }} -PublicationDirectory "${{ env.PublicationDirectory }}"
+      run: .\Build.ps1 -Publish -Configuration "${{ env.Configuration }}" -Version "${{ inputs.version }}" -PublicationDirectory "${{ env.PublicationDirectory }}"
 
     - name: Zip
       shell: pwsh
