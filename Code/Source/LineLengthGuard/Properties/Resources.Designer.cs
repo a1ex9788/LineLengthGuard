@@ -61,7 +61,7 @@ namespace LineLengthGuard.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Lines must no be too long..
+        ///   Looks up a localized string similar to Lines must not be too long..
         /// </summary>
         internal static string AnalyzerDescription {
             get {
@@ -70,7 +70,7 @@ namespace LineLengthGuard.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Line must no be longer than {0} characters but has {1}..
+        ///   Looks up a localized string similar to Line must not be longer than {0} characters but has {1}..
         /// </summary>
         internal static string AnalyzerMessageFormat {
             get {
