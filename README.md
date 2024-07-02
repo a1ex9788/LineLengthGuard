@@ -8,4 +8,4 @@ This analyser contains one single rule to achieve its objective:
 
 Rule|Title|Description
 -|-|-
-LLG001|Line too long|Ensures that lines are not longer than 120 characters, by default.
+LLG001|Line too long|Ensures that lines are not longer than 120 characters.
