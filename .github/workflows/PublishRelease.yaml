@@ -1,0 +1,48 @@
+name: Publish release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version of the release (i.e. 1.0)"
+        required: true
+
+permissions:
+  contents: write
+
+env:
+  Configuration: Release
+  PublicationDirectory: Publish
+  ReleaseName: v${{ inputs.version }}
+  ZipPath: LineLengthGuard-v${{ inputs.version }}.zip
+
+jobs:
+
+  PublishRelease:
+
+    runs-on: windows-latest
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+
+    - name: Publish
+      run: .\Build.ps1 -Publish -Configuration "${{ env.Configuration }}" -Version ${{ inputs.version }} -PublicationDirectory "${{ env.PublicationDirectory }}"
+
+    - name: Zip
+      shell: pwsh
+      run: Compress-Archive -Path "${{ env.PublicationDirectory }}\*" -DestinationPath "${{ env.ZipPath }}"
+
+    - name: Create release
+      uses: softprops/action-gh-release@v2
+      with:
+        tag_name: ${{ env.ReleaseName }}
+        files: ${{ env.ZipPath }}
