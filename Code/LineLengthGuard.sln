@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LineLengthGuard.Vsix", "Source\LineLengthGuard.Vsix\LineLengthGuard.Vsix.csproj", "{B78BA5B8-F899-48EA-976F-A9323C1B7AD4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LineLengthGuard.Package", "Source\LineLengthGuard.Package\LineLengthGuard.Package.csproj", "{9FA8C817-46BD-48AE-A441-07ED3E3C5978}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +44,10 @@ Global
 		{B78BA5B8-F899-48EA-976F-A9323C1B7AD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B78BA5B8-F899-48EA-976F-A9323C1B7AD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B78BA5B8-F899-48EA-976F-A9323C1B7AD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FA8C817-46BD-48AE-A441-07ED3E3C5978}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FA8C817-46BD-48AE-A441-07ED3E3C5978}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FA8C817-46BD-48AE-A441-07ED3E3C5978}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FA8C817-46BD-48AE-A441-07ED3E3C5978}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +56,7 @@ Global
 		{DB1A66C8-D1C7-4E16-9500-819EF4FC7ECE} = {9122A241-0C71-4C92-92B3-AF2D0B1DF37A}
 		{21C3E7E3-7D42-4982-9633-A4BEB25C4929} = {AF0070B9-EDFA-4219-9F4C-860FF05C9E5A}
 		{B78BA5B8-F899-48EA-976F-A9323C1B7AD4} = {9122A241-0C71-4C92-92B3-AF2D0B1DF37A}
+		{9FA8C817-46BD-48AE-A441-07ED3E3C5978} = {9122A241-0C71-4C92-92B3-AF2D0B1DF37A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {79BADE97-378D-4159-B9ED-A5694A432AAF}
