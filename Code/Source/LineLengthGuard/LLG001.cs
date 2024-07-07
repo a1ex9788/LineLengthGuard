@@ -9,7 +9,7 @@ namespace LineLengthGuard
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class LLG001 : DiagnosticAnalyzer
     {
-        private const int MaximumLength = 120;
+        private const int MaximumLineLength = 120;
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => LLG001Info.SupportedDiagnostics;
 
@@ -36,16 +36,21 @@ namespace LineLengthGuard
 
             foreach (TextLine textLine in sourceText.Lines)
             {
-                int length = textLine.ToString().Length;
+                int lineLength = textLine.ToString().Length;
 
-                if (length > MaximumLength)
+                if (lineLength > MaximumLineLength)
                 {
-                    Location location = Location.Create(context.Tree, textLine.Span);
-                    Diagnostic diagnostic = Diagnostic.Create(LLG001Info.Rule, location, MaximumLength, length);
-
-                    context.ReportDiagnostic(diagnostic);
+                    ReportDiagnostic(context, textLine, lineLength);
                 }
             }
+        }
+
+        private static void ReportDiagnostic(SyntaxTreeAnalysisContext context, TextLine textLine, int lineLength)
+        {
+            Location location = Location.Create(context.Tree, textLine.Span);
+            Diagnostic diagnostic = Diagnostic.Create(LLG001Info.Rule, location, MaximumLineLength, lineLength);
+
+            context.ReportDiagnostic(diagnostic);
         }
     }
 }
