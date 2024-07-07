@@ -4,13 +4,13 @@ using System.Threading.Tasks;
 using CSVerifier = Microsoft.CodeAnalysis.CSharp.Testing.CSharpAnalyzerVerifier<
     LineLengthGuard.LLG001, Microsoft.CodeAnalysis.Testing.DefaultVerifier>;
 
-namespace LineLengthGuard.Tests.UnitTests
+namespace LineLengthGuard.Tests.IntegrationTests
 {
     [TestClass]
-    public class LLG001UnitTests
+    public class LLG001IntegrationTests
     {
         [TestMethod]
-        public async Task LLG001_LinesShorterThanMaximumLength_DoesNotThrowException()
+        public async Task LLG001_LinesShorterThanMaximumLength_ReportsNoDiagnostics()
         {
             string code = """
 namespace TestNamespace
@@ -31,7 +31,7 @@ namespace TestNamespace
         }
 
         [TestMethod]
-        public async Task LLG001_LinesLongerThanMaximumLength_ThrowsException()
+        public async Task LLG001_LinesLongerThanMaximumLength_ReportsExpectedDiagnostics()
         {
             string code = """
 namespace TestNamespace
