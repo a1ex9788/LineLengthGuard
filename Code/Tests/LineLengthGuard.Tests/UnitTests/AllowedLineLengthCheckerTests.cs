@@ -1,4 +1,5 @@
 using FluentAssertions;
+using LineLengthGuard.Settings;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -9,10 +10,18 @@ namespace LineLengthGuard.Tests.UnitTests
     [TestClass]
     public class AllowedLineLengthCheckerTests
     {
+        private const int MaximumLineLength = 10;
+
+        private readonly AllowedLineLengthChecker allowedLineLengthChecker = new AllowedLineLengthChecker(
+            new FileSettings
+            {
+                MaximumLineLength = MaximumLineLength,
+            });
+
         [DataTestMethod]
-        [DataRow("aaaaabbbbbccccc")]
-        [DataRow("aaaaabbbbbcccccdddddeeeeefffffggggghhhhhiiiii")]
-        [DataRow("aaaaabbbbbcccccdddddeeeeefffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooopppppqqqqqrrrrrsssss")]
+        [DataRow("a")]
+        [DataRow("aaaaa")]
+        [DataRow("aaaaabbbb")]
         public void IsLineLengthAllowed_LineShorterThanMaximumLength_ReturnsTrue(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
@@ -21,7 +30,7 @@ namespace LineLengthGuard.Tests.UnitTests
             TextLine textLine = GetTextLine(line);
 
             // Act.
-            (bool isAllowed, int lineLength) = AllowedLineLengthChecker.IsLineLengthAllowed(textLine);
+            (bool isAllowed, int lineLength) = this.allowedLineLengthChecker.IsLineLengthAllowed(textLine);
 
             // Assert.
             isAllowed.Should().BeTrue();
@@ -33,26 +42,21 @@ namespace LineLengthGuard.Tests.UnitTests
         public void IsLineLengthAllowed_LineEqualToMaximumLength_ReturnsTrue()
         {
             // Arrange.
-            TextLine textLine = GetTextLine("""
-aaaaabbbbbcccccdddddeeeeefffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooopppppqqqqqrrrrrssssstttttuuuuuvvvvvwwwwwxxxxx
-""");
+            TextLine textLine = GetTextLine("aaaaabbbbb");
 
             // Act.
-            (bool isAllowed, int lineLength) = AllowedLineLengthChecker.IsLineLengthAllowed(textLine);
+            (bool isAllowed, int lineLength) = this.allowedLineLengthChecker.IsLineLengthAllowed(textLine);
 
             // Assert.
             isAllowed.Should().BeTrue();
 
-            lineLength.Should().Be(120);
+            lineLength.Should().Be(MaximumLineLength);
         }
 
         [DataTestMethod]
-        [DataRow("""
-aaaaabbbbbcccccdddddeeeeefffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooopppppqqqqqrrrrrssssstttttuuuuuvvvvvwwwwwxxxxxy
-""")]
-        [DataRow("""
-aaaaabbbbbcccccdddddeeeeefffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooopppppqqqqqrrrrrssssstttttuuuuuvvvvvwwwwwxxxxxyyyyy
-""")]
+        [DataRow("aaaaabbbbbc")]
+        [DataRow("aaaaabbbbbccccc")]
+        [DataRow("aaaaabbbbbcccccddddd")]
         public void IsLineLengthAllowed_LineLongerThanMaximumLength_ReturnsFalse(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
@@ -61,7 +65,7 @@ aaaaabbbbbcccccdddddeeeeefffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnoooooppppp
             TextLine textLine = GetTextLine(line);
 
             // Act.
-            (bool isAllowed, int lineLength) = AllowedLineLengthChecker.IsLineLengthAllowed(textLine);
+            (bool isAllowed, int lineLength) = this.allowedLineLengthChecker.IsLineLengthAllowed(textLine);
 
             // Assert.
             isAllowed.Should().BeFalse();

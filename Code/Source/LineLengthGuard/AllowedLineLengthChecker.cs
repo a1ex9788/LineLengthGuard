@@ -1,16 +1,22 @@
+using LineLengthGuard.Settings;
 using Microsoft.CodeAnalysis.Text;
 
 namespace LineLengthGuard
 {
-    internal static class AllowedLineLengthChecker
+    internal sealed class AllowedLineLengthChecker
     {
-        public const int MaximumLineLength = 120;
+        private readonly ISettings settings;
 
-        public static (bool IsAllowed, int LineLength) IsLineLengthAllowed(TextLine textLine)
+        public AllowedLineLengthChecker(ISettings settings)
+        {
+            this.settings = settings;
+        }
+
+        public (bool IsAllowed, int LineLength) IsLineLengthAllowed(TextLine textLine)
         {
             int lineLength = textLine.ToString().Length;
 
-            return (lineLength <= MaximumLineLength, lineLength);
+            return (lineLength <= this.settings.MaximumLineLength, lineLength);
         }
     }
 }

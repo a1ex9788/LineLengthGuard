@@ -1,3 +1,4 @@
+using LineLengthGuard.Settings;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Text;
@@ -9,6 +10,11 @@ namespace LineLengthGuard
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class LLG001 : DiagnosticAnalyzer
     {
+        private static readonly ISettings Settings = new FileSettings();
+
+        private static readonly AllowedLineLengthChecker AllowedLineLengthChecker =
+            new AllowedLineLengthChecker(Settings);
+
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => LLG001Info.SupportedDiagnostics;
 
         public override void Initialize(AnalysisContext context)
@@ -48,7 +54,7 @@ namespace LineLengthGuard
             Location location = Location.Create(context.Tree, textLine.Span);
 
             Diagnostic diagnostic = Diagnostic
-                .Create(LLG001Info.Rule, location, AllowedLineLengthChecker.MaximumLineLength, lineLength);
+                .Create(LLG001Info.Rule, location, Settings.MaximumLineLength, lineLength);
 
             context.ReportDiagnostic(diagnostic);
         }
