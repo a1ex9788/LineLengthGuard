@@ -15,6 +15,13 @@ using System.Diagnostics.CodeAnalysis;
     Target = "~M:LineLengthGuard.Tests.IntegrationTests.LLG001IntegrationTests" +
         ".LLG001_LinesLongerThanMaximumLength_ReportsExpectedDiagnostics~System.Threading.Tasks.Task")]
 [assembly: SuppressMessage(
+    "Minor Code Smell",
+    "S100:Methods and properties should be named in PascalCase",
+    Justification = "JSON is an acronym.",
+    Scope = "member",
+    Target = "~M:LineLengthGuard.Tests.UnitTests.Settings.Provider.SettingsProviderTests" +
+        ".GetSettingsJSON(LineLengthGuard.Settings.ISettings)~System.String")]
+[assembly: SuppressMessage(
     "Naming",
     "VSSpell001:Spell Check",
     Justification = "It is wanted the name that way to match diagnostic identifier.",
@@ -54,3 +61,10 @@ using System.Diagnostics.CodeAnalysis;
     Scope = "member",
     Target = "~M:LineLengthGuard.Tests.IntegrationTests.LLG001IntegrationTests." +
         "LLG001_LinesShorterThanMaximumLength_ReportsNoDiagnostics~System.Threading.Tasks.Task")]
+[assembly: SuppressMessage(
+    "Style",
+    "JSON002:Probable JSON string detected",
+    Justification = "It is used for testing a method that receives a JSON as argument.",
+    Scope = "member",
+    Target = "~M:LineLengthGuard.Tests.UnitTests.Settings.Parser.SettingsParserTests" +
+        ".Parse_ValidSchema_ReturnsExpectedSettings")]
