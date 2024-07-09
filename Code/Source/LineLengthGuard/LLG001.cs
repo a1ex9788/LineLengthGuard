@@ -46,7 +46,7 @@ namespace LineLengthGuard
 
             foreach (TextLine textLine in sourceText.Lines)
             {
-                (bool isAllowed, int lineLength) = allowedLineLengthChecker.IsLineLengthAllowed(textLine);
+                (bool isAllowed, int lineLength) = allowedLineLengthChecker.Check(textLine);
 
                 if (!isAllowed)
                 {

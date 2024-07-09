@@ -12,7 +12,7 @@ namespace LineLengthGuard
             this.settings = settings;
         }
 
-        public (bool IsAllowed, int LineLength) IsLineLengthAllowed(TextLine textLine)
+        public (bool IsAllowed, int LineLength) Check(TextLine textLine)
         {
             int lineLength = textLine.ToString().Length;
 

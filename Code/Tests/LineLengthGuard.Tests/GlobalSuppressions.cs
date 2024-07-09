@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
     Justification = "It is a test case.",
     Scope = "member",
     Target = "~M:LineLengthGuard.Tests.UnitTests.AllowedLineLengthCheckerTests" +
-        ".IsLineLengthAllowed_LineLongerThanMaximumLength_ReturnsFalse(System.String)")]
+        ".Check_LineLongerThanMaximumLength_ReturnsFalse(System.String)")]
 [assembly: SuppressMessage(
     "Layout",
     "MEN002:Line is too long",

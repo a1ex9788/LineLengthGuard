@@ -22,7 +22,7 @@ namespace LineLengthGuard.Tests.UnitTests
         [DataRow("a")]
         [DataRow("aaaaa")]
         [DataRow("aaaaabbbb")]
-        public void IsLineLengthAllowed_LineShorterThanMaximumLength_ReturnsTrue(string line)
+        public void Check_LineShorterThanMaximumLength_ReturnsTrue(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
 
@@ -30,7 +30,7 @@ namespace LineLengthGuard.Tests.UnitTests
             TextLine textLine = GetTextLine(line);
 
             // Act.
-            (bool isAllowed, int lineLength) = this.allowedLineLengthChecker.IsLineLengthAllowed(textLine);
+            (bool isAllowed, int lineLength) = this.allowedLineLengthChecker.Check(textLine);
 
             // Assert.
             isAllowed.Should().BeTrue();
@@ -39,13 +39,13 @@ namespace LineLengthGuard.Tests.UnitTests
         }
 
         [TestMethod]
-        public void IsLineLengthAllowed_LineEqualToMaximumLength_ReturnsTrue()
+        public void Check_LineEqualToMaximumLength_ReturnsTrue()
         {
             // Arrange.
             TextLine textLine = GetTextLine("aaaaabbbbb");
 
             // Act.
-            (bool isAllowed, int lineLength) = this.allowedLineLengthChecker.IsLineLengthAllowed(textLine);
+            (bool isAllowed, int lineLength) = this.allowedLineLengthChecker.Check(textLine);
 
             // Assert.
             isAllowed.Should().BeTrue();
@@ -57,7 +57,7 @@ namespace LineLengthGuard.Tests.UnitTests
         [DataRow("aaaaabbbbbc")]
         [DataRow("aaaaabbbbbccccc")]
         [DataRow("aaaaabbbbbcccccddddd")]
-        public void IsLineLengthAllowed_LineLongerThanMaximumLength_ReturnsFalse(string line)
+        public void Check_LineLongerThanMaximumLength_ReturnsFalse(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
 
@@ -65,7 +65,7 @@ namespace LineLengthGuard.Tests.UnitTests
             TextLine textLine = GetTextLine(line);
 
             // Act.
-            (bool isAllowed, int lineLength) = this.allowedLineLengthChecker.IsLineLengthAllowed(textLine);
+            (bool isAllowed, int lineLength) = this.allowedLineLengthChecker.Check(textLine);
 
             // Assert.
             isAllowed.Should().BeFalse();
