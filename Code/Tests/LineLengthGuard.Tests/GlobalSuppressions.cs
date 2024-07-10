@@ -5,13 +5,6 @@ using System.Diagnostics.CodeAnalysis;
     "MEN002:Line is too long",
     Justification = "It is a test case.",
     Scope = "member",
-    Target = "~M:LineLengthGuard.Tests.UnitTests.AllowedLineLengthCheckerTests" +
-        ".Check_LineLongerThanMaximumLength_ReturnsFalse(System.String)")]
-[assembly: SuppressMessage(
-    "Layout",
-    "MEN002:Line is too long",
-    Justification = "It is a test case.",
-    Scope = "member",
     Target = "~M:LineLengthGuard.Tests.IntegrationTests.LLG001IntegrationTests" +
         ".LLG001_LinesLongerThanMaximumLength_ReportsExpectedDiagnostics~System.Threading.Tasks.Task")]
 [assembly: SuppressMessage(

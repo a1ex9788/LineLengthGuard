@@ -1,5 +1,7 @@
 using LineLengthGuard.Settings;
 using Microsoft.CodeAnalysis.Text;
+using System;
+using System.Linq;
 
 namespace LineLengthGuard
 {
@@ -14,9 +16,11 @@ namespace LineLengthGuard
 
         public (bool IsAllowed, int LineLength) Check(TextLine textLine)
         {
-            int lineLength = textLine.ToString().Length;
+            string line = textLine.ToString();
 
-            return (lineLength <= this.settings.MaximumLineLength, lineLength);
+            bool excluded = this.settings.ExcludedLineStarts.Any(s => line.StartsWith(s, StringComparison.Ordinal));
+
+            return (excluded || line.Length <= this.settings.MaximumLineLength, line.Length);
         }
     }
 }

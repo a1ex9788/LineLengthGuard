@@ -10,27 +10,26 @@ namespace LineLengthGuard.Tests.UnitTests
     [TestClass]
     public class AllowedLineLengthCheckerTests
     {
-        private const int MaximumLineLength = 10;
-
-        private readonly AllowedLineLengthChecker allowedLineLengthChecker = new AllowedLineLengthChecker(
-            new FileSettings
-            {
-                MaximumLineLength = MaximumLineLength,
-            });
-
         [DataTestMethod]
         [DataRow("a")]
         [DataRow("aaaaa")]
         [DataRow("aaaaabbbb")]
-        public void Check_LineShorterThanMaximumLength_ReturnsTrue(string line)
+        [DataRow("aaaaabbbbb")]
+        public void Check_LineShorterThanMaximumLengthAndNotExcludedStart_ReturnsTrue(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
 
             // Arrange.
             TextLine textLine = GetTextLine(line);
 
+            AllowedLineLengthChecker allowedLineLengthChecker = new AllowedLineLengthChecker(
+                new FileSettings
+                {
+                    MaximumLineLength = 10,
+                });
+
             // Act.
-            (bool isAllowed, int lineLength) = this.allowedLineLengthChecker.Check(textLine);
+            (bool isAllowed, int lineLength) = allowedLineLengthChecker.Check(textLine);
 
             // Assert.
             isAllowed.Should().BeTrue();
@@ -38,37 +37,59 @@ namespace LineLengthGuard.Tests.UnitTests
             lineLength.Should().Be(line.Length);
         }
 
-        [TestMethod]
-        public void Check_LineEqualToMaximumLength_ReturnsTrue()
-        {
-            // Arrange.
-            TextLine textLine = GetTextLine("aaaaabbbbb");
-
-            // Act.
-            (bool isAllowed, int lineLength) = this.allowedLineLengthChecker.Check(textLine);
-
-            // Assert.
-            isAllowed.Should().BeTrue();
-
-            lineLength.Should().Be(MaximumLineLength);
-        }
-
         [DataTestMethod]
         [DataRow("aaaaabbbbbc")]
         [DataRow("aaaaabbbbbccccc")]
         [DataRow("aaaaabbbbbcccccddddd")]
-        public void Check_LineLongerThanMaximumLength_ReturnsFalse(string line)
+        public void Check_LineLongerThanMaximumLengthAndNotExcludedStart_ReturnsFalse(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
 
             // Arrange.
             TextLine textLine = GetTextLine(line);
 
+            AllowedLineLengthChecker allowedLineLengthChecker = new AllowedLineLengthChecker(
+                new FileSettings
+                {
+                    MaximumLineLength = 10,
+                });
+
             // Act.
-            (bool isAllowed, int lineLength) = this.allowedLineLengthChecker.Check(textLine);
+            (bool isAllowed, int lineLength) = allowedLineLengthChecker.Check(textLine);
 
             // Assert.
             isAllowed.Should().BeFalse();
+
+            lineLength.Should().Be(line.Length);
+        }
+
+        [DataTestMethod]
+        [DataRow("aa")]
+        [DataRow("aaaaa")]
+        [DataRow("aaaaabbbb")]
+        [DataRow("aaaaabbbbb")]
+        [DataRow("aaaaabbbbbc")]
+        [DataRow("aaaaabbbbbccccc")]
+        [DataRow("aaaaabbbbbcccccddddd")]
+        public void Check_LineShorterOrLongerThanMaximumLengthAndExcludedStart_ReturnsTrue(string line)
+        {
+            ArgumentNullException.ThrowIfNull(line);
+
+            // Arrange.
+            TextLine textLine = GetTextLine(line);
+
+            AllowedLineLengthChecker allowedLineLengthChecker = new AllowedLineLengthChecker(
+                new FileSettings
+                {
+                    ExcludedLineStarts = [line[0..1]],
+                    MaximumLineLength = 10,
+                });
+
+            // Act.
+            (bool isAllowed, int lineLength) = allowedLineLengthChecker.Check(textLine);
+
+            // Assert.
+            isAllowed.Should().BeTrue();
 
             lineLength.Should().Be(line.Length);
         }

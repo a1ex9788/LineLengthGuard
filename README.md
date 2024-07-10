@@ -20,7 +20,8 @@ Available settings are explained below:
 
 Key|Description
 -|-
-MaximumLineLength|Maximum number of characters that a line is allowed to have. Its default value is 120.
+ExcludedLineStarts|A collection of strings that make lines starting with any of them to be excluded from the analysis. Lines with any start are analysed by default.
+MaximumLineLength|Maximum number of characters that a line is allowed to have. Its default value is `120`.
 
 ### Importation
 
@@ -38,6 +39,10 @@ An example of settings file is the following:
 
 ```JSON
 {
-    "MaximumLineLength": 120
+  "ExcludedLineStarts": [
+    "// Filename: ",
+    "namespace "
+  ],
+  "MaximumLineLength": 120
 }
 ```

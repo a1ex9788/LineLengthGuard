@@ -26,7 +26,7 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
             ISettings? cachedSettings = settingsProvider.Get(settingsJSON);
 
             // Assert.
-            cachedSettings.Should().Be(expectedSettings);
+            cachedSettings.Should().BeEquivalentTo(expectedSettings);
 
             Dictionary<int, ISettings> expectedSettingsByFile = new Dictionary<int, ISettings>
             {

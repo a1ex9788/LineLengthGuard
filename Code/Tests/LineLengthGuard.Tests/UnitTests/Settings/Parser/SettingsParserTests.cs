@@ -14,7 +14,11 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
             // Arrange.
             string settingsJSON = """
 {
-    "MaximumLineLength": 5
+  "ExcludedLineStarts": [
+    "Value1",
+    "Value2"
+  ],
+  "MaximumLineLength": 5
 }
 """;
 
@@ -26,6 +30,7 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
             // Assert.
             settings.Should().NotBeNull();
 
+            settings!.ExcludedLineStarts.Should().BeEquivalentTo("Value1", "Value2");
             settings!.MaximumLineLength.Should().Be(5);
         }
 
