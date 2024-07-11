@@ -18,19 +18,19 @@ namespace LineLengthGuard
         {
             string line = textLine.ToString();
 
-            bool isAllowed = this.IsLineStartExcluded(line) || this.IsLineLengthShorterThanMaximum(line);
+            bool isAllowed = this.IsLineLengthShorterThanMaximum(line) || this.IsLineStartExcluded(line);
 
             return (isAllowed, line.Length);
-        }
-
-        private bool IsLineStartExcluded(string line)
-        {
-            return this.settings.ExcludedLineStarts.Any(s => line.StartsWith(s, StringComparison.Ordinal));
         }
 
         private bool IsLineLengthShorterThanMaximum(string line)
         {
             return line.Length <= this.settings.MaximumLineLength;
+        }
+
+        private bool IsLineStartExcluded(string line)
+        {
+            return this.settings.ExcludedLineStarts.Any(s => line.StartsWith(s, StringComparison.Ordinal));
         }
     }
 }
