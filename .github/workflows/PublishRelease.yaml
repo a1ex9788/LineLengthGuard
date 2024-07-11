@@ -16,8 +16,8 @@ permissions:
 env:
   Configuration: Release
   PublicationDirectory: Publish
-  ReleaseName: v${{ inputs.version }}
-  ZipPath: LineLengthGuard-v${{ inputs.version }}.zip
+  ReleaseName: ${{ inputs.version }}
+  ZipPath: LineLengthGuard-${{ inputs.version }}.zip
 
 jobs:
 
