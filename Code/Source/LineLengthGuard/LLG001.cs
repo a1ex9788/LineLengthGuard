@@ -42,7 +42,8 @@ namespace LineLengthGuard
 
             ISettings settings = GetSettings(context);
 
-            AllowedLineLengthChecker allowedLineLengthChecker = new AllowedLineLengthChecker(settings);
+            AllowedLineLengthChecker allowedLineLengthChecker = new AllowedLineLengthChecker(
+                settings, new MethodNamesChecker(settings));
 
             foreach (TextLine textLine in sourceText.Lines)
             {

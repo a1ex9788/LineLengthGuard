@@ -6,6 +6,8 @@ namespace LineLengthGuard.Settings
     {
         private const int DefaultMaximumLineLength = 120;
 
+        public bool AllowLongMethodNamesWithUnderscores { get; set; }
+
         public IReadOnlyCollection<string> ExcludedLineStarts { get; set; } = [];
 
         public int MaximumLineLength { get; set; } = DefaultMaximumLineLength;

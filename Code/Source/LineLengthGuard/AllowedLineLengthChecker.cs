@@ -8,17 +8,21 @@ namespace LineLengthGuard
     internal sealed class AllowedLineLengthChecker
     {
         private readonly ISettings settings;
+        private readonly MethodNamesChecker methodNamesChecker;
 
-        public AllowedLineLengthChecker(ISettings settings)
+        public AllowedLineLengthChecker(ISettings settings, MethodNamesChecker methodNamesChecker)
         {
             this.settings = settings;
+            this.methodNamesChecker = methodNamesChecker;
         }
 
         public (bool IsAllowed, int LineLength) Check(TextLine textLine)
         {
             string line = textLine.ToString();
 
-            bool isAllowed = this.IsLineLengthShorterThanMaximum(line) || this.IsLineStartExcluded(line);
+            bool isAllowed = this.IsLineLengthShorterThanMaximum(line)
+                || this.IsLineStartExcluded(line)
+                || this.methodNamesChecker.IsAllowedMethodNameWithUnderscores(line);
 
             return (isAllowed, line.Length);
         }

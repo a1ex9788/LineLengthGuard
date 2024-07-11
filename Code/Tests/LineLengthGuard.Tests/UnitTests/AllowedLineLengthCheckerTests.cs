@@ -15,18 +15,15 @@ namespace LineLengthGuard.Tests.UnitTests
         [DataRow("aaaaa")]
         [DataRow("aaaaabbbb")]
         [DataRow("aaaaabbbbb")]
-        public void Check_LineShorterThanMaximumLengthAndNotExcludedStart_ReturnsTrue(string line)
+        public void Check_ShorterThanMaximumLengthLine_ReturnsTrue(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
 
             // Arrange.
             TextLine textLine = GetTextLine(line);
 
-            AllowedLineLengthChecker allowedLineLengthChecker = new AllowedLineLengthChecker(
-                new FileSettings
-                {
-                    MaximumLineLength = 10,
-                });
+            AllowedLineLengthChecker allowedLineLengthChecker = GetAllowedLineLengthChecker(
+                new FileSettings { MaximumLineLength = 10 });
 
             // Act.
             (bool isAllowed, int lineLength) = allowedLineLengthChecker.Check(textLine);
@@ -41,18 +38,15 @@ namespace LineLengthGuard.Tests.UnitTests
         [DataRow("aaaaabbbbbc")]
         [DataRow("aaaaabbbbbccccc")]
         [DataRow("aaaaabbbbbcccccddddd")]
-        public void Check_LineLongerThanMaximumLengthAndNotExcludedStart_ReturnsFalse(string line)
+        public void Check_LongerThanMaximumLengthLine_ReturnsFalse(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
 
             // Arrange.
             TextLine textLine = GetTextLine(line);
 
-            AllowedLineLengthChecker allowedLineLengthChecker = new AllowedLineLengthChecker(
-                new FileSettings
-                {
-                    MaximumLineLength = 10,
-                });
+            AllowedLineLengthChecker allowedLineLengthChecker = GetAllowedLineLengthChecker(
+                new FileSettings { MaximumLineLength = 10 });
 
             // Act.
             (bool isAllowed, int lineLength) = allowedLineLengthChecker.Check(textLine);
@@ -71,14 +65,14 @@ namespace LineLengthGuard.Tests.UnitTests
         [DataRow("aaaaabbbbbc")]
         [DataRow("aaaaabbbbbccccc")]
         [DataRow("aaaaabbbbbcccccddddd")]
-        public void Check_LineShorterOrLongerThanMaximumLengthAndExcludedStart_ReturnsTrue(string line)
+        public void Check_ExcludedStart_ReturnsTrue(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
 
             // Arrange.
             TextLine textLine = GetTextLine(line);
 
-            AllowedLineLengthChecker allowedLineLengthChecker = new AllowedLineLengthChecker(
+            AllowedLineLengthChecker allowedLineLengthChecker = GetAllowedLineLengthChecker(
                 new FileSettings
                 {
                     ExcludedLineStarts = [line[0..1]],
@@ -94,9 +88,94 @@ namespace LineLengthGuard.Tests.UnitTests
             lineLength.Should().Be(line.Length);
         }
 
+        [DataTestMethod]
+        [DataRow("aaaaabbbbbc")]
+        [DataRow("aaaaabbbbbccccc")]
+        [DataRow("aaaaabbbbbcccccddddd")]
+        public void Check_NotExcludedStart_ReturnsFalse(string line)
+        {
+            ArgumentNullException.ThrowIfNull(line);
+
+            // Arrange.
+            TextLine textLine = GetTextLine(line);
+
+            AllowedLineLengthChecker allowedLineLengthChecker = GetAllowedLineLengthChecker(
+                new FileSettings
+                {
+                    ExcludedLineStarts = [],
+                    MaximumLineLength = 10,
+                });
+
+            // Act.
+            (bool isAllowed, int lineLength) = allowedLineLengthChecker.Check(textLine);
+
+            // Assert.
+            isAllowed.Should().BeFalse();
+
+            lineLength.Should().Be(line.Length);
+        }
+
+        [DataTestMethod]
+        [DataRow("A_B_C()")]
+        [DataRow("Aaa_Bbb_Ccc()")]
+        [DataRow("Aaaaa_Bbbbb_Ccccc()")]
+        public void Check_AllowedMethodNameWithUnderscores_ReturnsTrue(string line)
+        {
+            ArgumentNullException.ThrowIfNull(line);
+
+            // Arrange.
+            TextLine textLine = GetTextLine(line);
+
+            AllowedLineLengthChecker allowedLineLengthChecker = GetAllowedLineLengthChecker(
+                new FileSettings
+                {
+                    AllowLongMethodNamesWithUnderscores = true,
+                    MaximumLineLength = 10,
+                });
+
+            // Act.
+            (bool isAllowed, int lineLength) = allowedLineLengthChecker.Check(textLine);
+
+            // Assert.
+            isAllowed.Should().BeTrue();
+
+            lineLength.Should().Be(line.Length);
+        }
+
+        [DataTestMethod]
+        [DataRow("Aaa_Bbb_Ccc()")]
+        [DataRow("Aaaaa_Bbbbb_Ccccc()")]
+        public void Check_NotAllowedMethodNameWithUnderscores_ReturnsFalse(string line)
+        {
+            ArgumentNullException.ThrowIfNull(line);
+
+            // Arrange.
+            TextLine textLine = GetTextLine(line);
+
+            AllowedLineLengthChecker allowedLineLengthChecker = GetAllowedLineLengthChecker(
+                new FileSettings
+                {
+                    AllowLongMethodNamesWithUnderscores = false,
+                    MaximumLineLength = 10,
+                });
+
+            // Act.
+            (bool isAllowed, int lineLength) = allowedLineLengthChecker.Check(textLine);
+
+            // Assert.
+            isAllowed.Should().BeFalse();
+
+            lineLength.Should().Be(line.Length);
+        }
+
         private static TextLine GetTextLine(string text)
         {
             return SourceText.From(text).Lines.Single();
+        }
+
+        private static AllowedLineLengthChecker GetAllowedLineLengthChecker(ISettings settings)
+        {
+            return new AllowedLineLengthChecker(settings, new MethodNamesChecker(settings));
         }
     }
 }

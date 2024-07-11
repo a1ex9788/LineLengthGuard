@@ -20,6 +20,7 @@ Available settings are explained below:
 
 Key|Description
 -|-
+AllowLongMethodNamesWithUnderscores|A value that indicates if method names that contain underscores are allowed to exceed the maximum line length. Its default value is `false`.
 ExcludedLineStarts|A collection of strings that make lines starting with any of them to be excluded from the analysis. Lines with any start are analysed by default.
 MaximumLineLength|Maximum number of characters that a line is allowed to have. Its default value is `120`.
 
@@ -39,6 +40,7 @@ An example of settings file is the following:
 
 ```JSON
 {
+  "AllowLongMethodNamesWithUnderscores": false,
   "ExcludedLineStarts": [
     "// Filename: ",
     "namespace "
