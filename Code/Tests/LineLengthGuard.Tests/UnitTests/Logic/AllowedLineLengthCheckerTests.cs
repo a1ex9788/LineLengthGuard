@@ -1,11 +1,12 @@
 using FluentAssertions;
+using LineLengthGuard.Logic;
 using LineLengthGuard.Settings;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Linq;
 
-namespace LineLengthGuard.Tests.UnitTests
+namespace LineLengthGuard.Tests.UnitTests.Logic
 {
     [TestClass]
     public class AllowedLineLengthCheckerTests

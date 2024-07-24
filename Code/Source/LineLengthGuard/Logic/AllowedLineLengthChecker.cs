@@ -3,7 +3,7 @@ using Microsoft.CodeAnalysis.Text;
 using System;
 using System.Linq;
 
-namespace LineLengthGuard
+namespace LineLengthGuard.Logic
 {
     internal sealed class AllowedLineLengthChecker
     {

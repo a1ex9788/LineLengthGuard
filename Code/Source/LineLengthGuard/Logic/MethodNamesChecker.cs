@@ -2,7 +2,7 @@ using LineLengthGuard.Settings;
 using System;
 using System.Linq;
 
-namespace LineLengthGuard
+namespace LineLengthGuard.Logic
 {
     internal sealed class MethodNamesChecker
     {
