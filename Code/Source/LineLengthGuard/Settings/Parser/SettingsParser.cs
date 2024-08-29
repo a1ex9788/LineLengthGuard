@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace LineLengthGuard.Settings.Parser
 {
@@ -8,10 +8,7 @@ namespace LineLengthGuard.Settings.Parser
         {
             try
             {
-                // Newtonsoft.Json is used instead of System.Text.Json to avoid execution errors saying its assembly is
-                // not found. It is thought that they are produced because of the use of different frameworks in the
-                // analyser and the projects that use them.
-                return JsonConvert.DeserializeObject<FileSettings>(settingsJSON);
+                return JsonSerializer.Deserialize<FileSettings>(settingsJSON);
             }
             catch (JsonException)
             {
