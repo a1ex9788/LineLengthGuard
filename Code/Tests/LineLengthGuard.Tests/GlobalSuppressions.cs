@@ -60,4 +60,11 @@ using System.Diagnostics.CodeAnalysis;
     Justification = "It is used for testing a method that receives a JSON as argument.",
     Scope = "member",
     Target = "~M:LineLengthGuard.Tests.UnitTests.Settings.Parser.SettingsParserTests" +
-        ".Parse_ValidSchema_ReturnsExpectedSettings")]
+        ".Parse_ValidSchemaWithCollectionWithOneValue_ReturnsExpectedSettings")]
+[assembly: SuppressMessage(
+    "Style",
+    "JSON002:Probable JSON string detected",
+    Justification = "It is used for testing a method that receives a JSON as argument.",
+    Scope = "member",
+    Target = "~M:LineLengthGuard.Tests.UnitTests.Settings.Parser.SettingsParserTests" +
+        ".Parse_ValidSchemaWithCollectionWithMultipleValues_ReturnsExpectedSettings")]

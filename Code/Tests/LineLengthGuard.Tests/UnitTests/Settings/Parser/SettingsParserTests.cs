@@ -9,7 +9,7 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
     public class SettingsParserTests
     {
         [TestMethod]
-        public void Parse_ValidSchema_ReturnsExpectedSettings()
+        public void Parse_ValidSchemaWithCollectionWithOneValue_ReturnsExpectedSettings()
         {
             // Arrange.
             string settingsJSON = """
@@ -17,7 +17,8 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
   "AllowLongMethodNamesWithUnderscores": true,
   "ExcludedLineStarts": [
     "Value1",
-    "Value2"
+    "Value2",
+    "Value 3"
   ],
   "MaximumLineLength": 5
 }
@@ -32,8 +33,35 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
             settings.Should().NotBeNull();
 
             settings!.AllowLongMethodNamesWithUnderscores.Should().BeTrue();
-            settings!.ExcludedLineStarts.Should().BeEquivalentTo("Value1", "Value2");
+            settings!.ExcludedLineStarts.Should().BeEquivalentTo("Value1", "Value2", "Value 3");
             settings!.MaximumLineLength.Should().Be(5);
+        }
+
+        [TestMethod]
+        public void Parse_ValidSchemaWithCollectionWithMultipleValues_ReturnsExpectedSettings()
+        {
+            // Arrange.
+            string settingsJSON = """
+{
+  "AllowLongMethodNamesWithUnderscores": false,
+  "ExcludedLineStarts": [
+    "Value"
+  ],
+  "MaximumLineLength": 55
+}
+""";
+
+            SettingsParser settingsParser = new SettingsParser();
+
+            // Act.
+            ISettings? settings = settingsParser.Parse(settingsJSON);
+
+            // Assert.
+            settings.Should().NotBeNull();
+
+            settings!.AllowLongMethodNamesWithUnderscores.Should().BeFalse();
+            settings!.ExcludedLineStarts.Should().BeEquivalentTo("Value");
+            settings!.MaximumLineLength.Should().Be(55);
         }
 
         [TestMethod]

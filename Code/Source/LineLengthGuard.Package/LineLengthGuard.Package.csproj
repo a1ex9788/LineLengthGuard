@@ -24,14 +24,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\LineLengthGuard\LineLengthGuard.csproj" />
-    <PackageReference Include="System.Text.Json" />
   </ItemGroup>
   
   <ItemGroup>
     <None Update="tools\*.ps1" CopyToOutputDirectory="PreserveNewest" Pack="true" PackagePath="\" />
     <None Include="..\..\..\README.md" Pack="true" PackagePath="\" />
     <None Include="$(OutputPath)\LineLengthGuard.dll" Pack="true" PackagePath="analyzers/dotnet/cs" />
-    <None Include="$(OutputPath)\System.Text.Json.dll" Pack="true" PackagePath="analyzers/dotnet/cs" />
   </ItemGroup>
 
 </Project>
