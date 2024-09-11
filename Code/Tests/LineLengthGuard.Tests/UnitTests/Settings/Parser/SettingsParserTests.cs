@@ -16,9 +16,7 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
 {
   "AllowLongMethodNamesWithUnderscores": true,
   "ExcludedLineStarts": [
-    "Value1",
-    "Value2",
-    "Value 3"
+    "Value"
   ],
   "MaximumLineLength": 5
 }
@@ -33,7 +31,7 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
             settings.Should().NotBeNull();
 
             settings!.AllowLongMethodNamesWithUnderscores.Should().BeTrue();
-            settings!.ExcludedLineStarts.Should().BeEquivalentTo("Value1", "Value2", "Value 3");
+            settings!.ExcludedLineStarts.Should().BeEquivalentTo("Value");
             settings!.MaximumLineLength.Should().Be(5);
         }
 
@@ -45,7 +43,10 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
 {
   "AllowLongMethodNamesWithUnderscores": false,
   "ExcludedLineStarts": [
-    "Value"
+    "Value1",
+    "Value2",
+    "Value 3",
+    "    Target = \"~"
   ],
   "MaximumLineLength": 55
 }
@@ -60,7 +61,7 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
             settings.Should().NotBeNull();
 
             settings!.AllowLongMethodNamesWithUnderscores.Should().BeFalse();
-            settings!.ExcludedLineStarts.Should().BeEquivalentTo("Value");
+            settings!.ExcludedLineStarts.Should().BeEquivalentTo("Value1", "Value2", "Value 3", "    Target = \"~");
             settings!.MaximumLineLength.Should().Be(55);
         }
 

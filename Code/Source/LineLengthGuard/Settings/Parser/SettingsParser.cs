@@ -31,9 +31,11 @@ namespace LineLengthGuard.Settings.Parser
 
             StringBuilder stringBuilder = new StringBuilder();
 
+            char previousCharacter = ' ';
+
             foreach (char character in json)
             {
-                if (character == '"')
+                if (character == '"' && previousCharacter != '\\')
                 {
                     openedQuotes = !openedQuotes;
 
@@ -48,6 +50,8 @@ namespace LineLengthGuard.Settings.Parser
                 }
 
                 stringBuilder.Append(character);
+
+                previousCharacter = character;
             }
 
             return stringBuilder.ToString();
@@ -175,8 +179,11 @@ namespace LineLengthGuard.Settings.Parser
                         return null;
                     }
 
-                    excludedLineStarts.Add(
-                        currentValue.Substring(1, currentValue.Length - "\"\"".Length));
+                    string currentValueToAdd = currentValue
+                        .Substring(1, currentValue.Length - "\"\"".Length)
+                        .Replace("\\\"", "\"");
+
+                    excludedLineStarts.Add(currentValueToAdd);
                 }
             }
 
