@@ -8,7 +8,7 @@ namespace LineLengthGuard
     {
         public const string DiagnosticId = nameof(LLG001);
 
-        public const string Category = "Naming";
+        public const string Category = "Style";
 
         private static readonly LocalizableString Title = new LocalizableResourceString(
             nameof(Resources.AnalyzerTitle),
