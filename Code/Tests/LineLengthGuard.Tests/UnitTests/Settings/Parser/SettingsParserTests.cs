@@ -46,6 +46,7 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
     "Value1",
     "Value2",
     "Value 3",
+    "    checkId: \"",
     "    Target = \"~"
   ],
   "MaximumLineLength": 55
@@ -61,7 +62,12 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
             settings.Should().NotBeNull();
 
             settings!.AllowLongMethodNamesWithUnderscores.Should().BeFalse();
-            settings!.ExcludedLineStarts.Should().BeEquivalentTo("Value1", "Value2", "Value 3", "    Target = \"~");
+
+            settings!
+                .ExcludedLineStarts
+                .Should()
+                .BeEquivalentTo("Value1", "Value2", "Value 3", "    checkId: \"", "    Target = \"~");
+
             settings!.MaximumLineLength.Should().Be(55);
         }
 

@@ -98,27 +98,17 @@ namespace LineLengthGuard.Settings.Parser
 
             foreach (string part in parts)
             {
-                string[] subparts = part.Split(':');
+                Configuration? configuration = ParseConfiguration(part);
 
-                if (subparts.Length != 2)
+                if (configuration is null)
                 {
                     return null;
                 }
 
-                string key = subparts[0];
-
-                if (!key.StartsWith("\"", StringComparison.Ordinal) || !key.EndsWith("\"", StringComparison.Ordinal))
-                {
-                    return null;
-                }
-
-                key = key.Substring(1, key.Length - "\"\"".Length);
-                string stringValue = subparts[1];
-
-                switch (key)
+                switch (configuration.Key)
                 {
                     case "AllowLongMethodNamesWithUnderscores":
-                        bool boolParsed = bool.TryParse(stringValue, out bool boolValue);
+                        bool boolParsed = bool.TryParse(configuration.StringValue, out bool boolValue);
 
                         if (!boolParsed)
                         {
@@ -129,12 +119,15 @@ namespace LineLengthGuard.Settings.Parser
                         break;
 
                     case "ExcludedLineStarts":
-                        excludedLineStarts = ParseExcludedLineStarts(stringValue);
+                        excludedLineStarts = ParseExcludedLineStarts(configuration.StringValue);
                         break;
 
                     case "MaximumLineLength":
                         bool intParsed = int.TryParse(
-                            stringValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out int intValue);
+                            configuration.StringValue,
+                            NumberStyles.Integer,
+                            CultureInfo.InvariantCulture,
+                            out int intValue);
 
                         if (!intParsed)
                         {
@@ -151,6 +144,28 @@ namespace LineLengthGuard.Settings.Parser
 
             return GetFileSettingsFromParsedValues(
                 allowLongMethodNamesWithUnderscores, excludedLineStarts, maximumLineLength);
+        }
+
+        private static Configuration? ParseConfiguration(string part)
+        {
+            int colonIndex = part.IndexOf(':');
+
+            if (colonIndex == -1 || colonIndex == part.Length - 1)
+            {
+                return null;
+            }
+
+            string key = part.Substring(0, colonIndex);
+            string stringValue = part.Substring(colonIndex + 1);
+
+            if (!key.StartsWith("\"", StringComparison.Ordinal) || !key.EndsWith("\"", StringComparison.Ordinal))
+            {
+                return null;
+            }
+
+            key = key.Substring(1, key.Length - "\"\"".Length);
+
+            return new Configuration(key, stringValue);
         }
 
         private static List<string>? ParseExcludedLineStarts(string stringValue)
@@ -211,6 +226,19 @@ namespace LineLengthGuard.Settings.Parser
             }
 
             return fileSettings;
+        }
+
+        private sealed class Configuration
+        {
+            public Configuration(string key, string stringValue)
+            {
+                this.Key = key;
+                this.StringValue = stringValue;
+            }
+
+            public string Key { get; }
+
+            public string StringValue { get; }
         }
     }
 }
