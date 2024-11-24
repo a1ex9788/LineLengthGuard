@@ -75,7 +75,10 @@ namespace LineLengthGuard
             using CancellationTokenSource cancellationTokenSource =
                 new CancellationTokenSource(TimeSpan.FromSeconds(10));
 
-            return SettingsProvider.Get(settingsFiles.Single().GetText(cancellationTokenSource.Token).ToString());
+            SourceText sourceText = settingsFiles.Single().GetText(cancellationTokenSource.Token)
+                ?? throw new InvalidOperationException();
+
+            return SettingsProvider.Get(sourceText.ToString());
         }
 
         private static void ReportDiagnostic(

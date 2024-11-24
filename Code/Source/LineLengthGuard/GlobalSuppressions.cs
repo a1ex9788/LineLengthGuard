@@ -1,6 +1,19 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage(
+    "MicrosoftCodeAnalysisCorrectness",
+    "RS1035:Do not use APIs banned for analyzers",
+    Justification = "TODO: False positive, https://github.com/dotnet/roslyn-analyzers/issues/6467.",
+    Scope = "member",
+    Target = "~M:LineLengthGuard.Settings.Parser.SettingsParser.Parse(System.String)~LineLengthGuard.Settings" +
+        ".ISettings")]
+[assembly: SuppressMessage(
+    "MicrosoftCodeAnalysisReleaseTracking",
+    "RS2008:Enable analyzer release tracking",
+    Justification = "It is not needed.",
+    Scope = "member",
+    Target = "~F:LineLengthGuard.LLG001Info.Rule")]
+[assembly: SuppressMessage(
     "Minor Code Smell",
     "S101:Types should be named in PascalCase",
     Justification = "It is wanted the name that way to match diagnostic identifier.",

@@ -34,6 +34,6 @@ namespace LineLengthGuard
             isEnabledByDefault: true,
             Description);
 
-        public static readonly ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics = ImmutableArray.Create(Rule);
+        public static readonly ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics = [Rule];
     }
 }
