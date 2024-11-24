@@ -44,7 +44,8 @@ namespace LineLengthGuard
             ISettings settings = GetSettings(context);
 
             AllowedLineLengthChecker allowedLineLengthChecker = new AllowedLineLengthChecker(
-                settings, new MethodNamesChecker(settings));
+                settings,
+                new MethodNamesChecker(settings));
 
             foreach (TextLine textLine in sourceText.Lines)
             {
@@ -60,7 +61,8 @@ namespace LineLengthGuard
         private static ISettings GetSettings(SyntaxTreeAnalysisContext context)
         {
             AdditionalText[] settingsFiles = context.Options.AdditionalFiles
-                .Where(at => Path.GetFileName(at.Path) == Constants.SettingsFileName).ToArray();
+                .Where(at => Path.GetFileName(at.Path) == Constants.SettingsFileName)
+                .ToArray();
 
             if (settingsFiles.Length == 0)
             {
@@ -82,7 +84,10 @@ namespace LineLengthGuard
         }
 
         private static void ReportDiagnostic(
-            SyntaxTreeAnalysisContext context, int maximumLineLength, TextLine textLine, int lineLength)
+            SyntaxTreeAnalysisContext context,
+            int maximumLineLength,
+            TextLine textLine,
+            int lineLength)
         {
             Location location = Location.Create(context.Tree, textLine.Span);
 

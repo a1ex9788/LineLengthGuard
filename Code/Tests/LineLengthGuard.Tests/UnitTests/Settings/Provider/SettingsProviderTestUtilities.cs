@@ -16,7 +16,8 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
         }
 
         public static void SetSettingsByFileField(
-            SettingsProvider settingsProvider, Dictionary<int, ISettings> value)
+            SettingsProvider settingsProvider,
+            Dictionary<int, ISettings> value)
         {
             SettingsByFileField.SetValue(settingsProvider, value);
         }

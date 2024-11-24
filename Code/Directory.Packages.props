@@ -1,15 +1,17 @@
 <Project>
-  
+
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
-  
+
+  <!-- Code. -->
   <ItemGroup>
     <PackageVersion Include="Microsoft.CodeAnalysis" Version="4.11.0" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp" Version="4.11.0" />
     <PackageVersion Include="Microsoft.VSSDK.BuildTools" Version="17.12.2069" />
   </ItemGroup>
-  
+
+  <!-- Tests. -->
   <ItemGroup>
     <PackageVersion Include="FluentAssertions" Version="6.12.2" />
     <PackageVersion Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.MSTest" Version="1.1.2" />
@@ -17,7 +19,8 @@
     <PackageVersion Include="MSTest.TestAdapter" Version="3.6.3" />
     <PackageVersion Include="MSTest.TestFramework" Version="3.6.3" />
   </ItemGroup>
-  
+
+  <!-- Analysers. -->
   <ItemGroup>
     <PackageVersion Include="AsyncFixer" Version="1.6.0" />
     <PackageVersion Include="Menees.Analyzers" Version="3.2.2" />

@@ -10,7 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage(
     "Maintainability",
     "CA1515:Consider making public types internal",
-    Justification = "Tests framework only detect tests in public classes.",
+    Justification = "Tests framework only detects tests in public classes.",
     Scope = "namespaceAndDescendants",
     Target = "~N:LineLengthGuard.Tests")]
 [assembly: SuppressMessage(

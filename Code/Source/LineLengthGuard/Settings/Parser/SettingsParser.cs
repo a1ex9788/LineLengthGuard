@@ -143,7 +143,9 @@ namespace LineLengthGuard.Settings.Parser
             }
 
             return GetFileSettingsFromParsedValues(
-                allowLongMethodNamesWithUnderscores, excludedLineStarts, maximumLineLength);
+                allowLongMethodNamesWithUnderscores,
+                excludedLineStarts,
+                maximumLineLength);
         }
 
         private static Configuration? ParseConfiguration(string part)
@@ -206,7 +208,9 @@ namespace LineLengthGuard.Settings.Parser
         }
 
         private static FileSettings GetFileSettingsFromParsedValues(
-            bool? allowLongMethodNamesWithUnderscores, List<string>? excludedLineStarts, int? maximumLineLength)
+            bool? allowLongMethodNamesWithUnderscores,
+            List<string>? excludedLineStarts,
+            int? maximumLineLength)
         {
             FileSettings fileSettings = new FileSettings();
 

@@ -33,8 +33,10 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
                 { StringComparer.Ordinal.GetHashCode(settingsJSON), expectedSettings },
             };
 
-            SettingsProviderTestUtilities.GetSettingsByFileField(settingsProvider)
-                .Should().BeEquivalentTo(expectedSettingsByFile);
+            SettingsProviderTestUtilities
+                .GetSettingsByFileField(settingsProvider)
+                .Should()
+                .BeEquivalentTo(expectedSettingsByFile);
         }
 
         [TestMethod]
@@ -58,8 +60,10 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
                 { StringComparer.Ordinal.GetHashCode(settingsJSON), expectedSettings },
             };
 
-            SettingsProviderTestUtilities.GetSettingsByFileField(settingsProvider)
-                .Should().BeEquivalentTo(expectedSettingsByFile);
+            SettingsProviderTestUtilities
+                .GetSettingsByFileField(settingsProvider)
+                .Should()
+                .BeEquivalentTo(expectedSettingsByFile);
         }
 
         [TestMethod]
@@ -85,8 +89,10 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
             // Assert.
             cachedSettings.Should().Be(expectedSettings);
 
-            SettingsProviderTestUtilities.GetSettingsByFileField(settingsProvider)
-                .Should().BeEquivalentTo(settingsByFile);
+            SettingsProviderTestUtilities
+                .GetSettingsByFileField(settingsProvider)
+                .Should()
+                .BeEquivalentTo(settingsByFile);
         }
 
         [TestMethod]
@@ -112,8 +118,10 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
             // Assert.
             cachedSettings.Should().Be(expectedSettings);
 
-            SettingsProviderTestUtilities.GetSettingsByFileField(settingsProvider)
-                .Should().BeEquivalentTo(settingsByFile);
+            SettingsProviderTestUtilities
+                .GetSettingsByFileField(settingsProvider)
+                .Should()
+                .BeEquivalentTo(settingsByFile);
         }
 
         private static string GetSettingsJSON(ISettings settings)
