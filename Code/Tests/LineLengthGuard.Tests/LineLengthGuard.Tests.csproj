@@ -17,4 +17,13 @@
     <ProjectReference Include="..\..\Source\LineLengthGuard\LineLengthGuard.csproj" />
   </ItemGroup>
 
+  <!--
+    TODO: Remove when vulnerability is solved.
+    Warning As Error: Package 'System.Formats.Asn1' 5.0.0 has a known high severity vulnerability,
+    https://github.com/advisories/GHSA-447r-wph3-92pm
+  -->
+  <PropertyGroup>
+    <NoWarn>$(NoWarn),NU1903</NoWarn>
+  </PropertyGroup>
+
 </Project>
