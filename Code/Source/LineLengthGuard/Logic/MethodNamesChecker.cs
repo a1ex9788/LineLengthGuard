@@ -15,10 +15,10 @@ namespace LineLengthGuard.Logic
 
         public bool IsAllowedMethodNameWithUnderscores(string line)
         {
-            return this.settings.AllowLongMethodNamesWithUnderscores && IsMethodName(line);
+            return this.settings.AllowLongMethodNamesWithUnderscores && IsMethodNameWithUnderscores(line);
         }
 
-        private static bool IsMethodName(string line)
+        private static bool IsMethodNameWithUnderscores(string line)
         {
             string? lastItem = line.Split(' ').LastOrDefault();
 
