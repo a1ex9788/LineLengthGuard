@@ -167,6 +167,59 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
             lineLength.Should().Be(line.Length);
         }
 
+        [DataTestMethod]
+        [DataRow("\"Aaaaa\";")]
+        [DataRow("\"aaaaabbbbb\";")]
+        [DataRow("\"aaaaabbbbbccccc\";")]
+        public void HasAllowedLineLength_AllowLongStringDefinitions_ReturnsTrue(string line)
+        {
+            ArgumentNullException.ThrowIfNull(line);
+
+            // Arrange.
+            TextLine textLine = GetTextLine(line);
+
+            LinesLengthChecker linesLengthChecker = GetLinesLengthChecker(
+                new FileSettings
+                {
+                    AllowLongStringDefinitions = true,
+                    MaximumLineLength = 10,
+                });
+
+            // Act.
+            (bool isAllowed, int lineLength) = linesLengthChecker.HasAllowedLineLength(textLine);
+
+            // Assert.
+            isAllowed.Should().BeTrue();
+
+            lineLength.Should().Be(line.Length);
+        }
+
+        [DataTestMethod]
+        [DataRow("\"aaaaabbbbb\";")]
+        [DataRow("\"aaaaabbbbbccccc\";")]
+        public void HasAllowedLineLength_NotAllowLongStringDefinitions_ReturnsFalse(string line)
+        {
+            ArgumentNullException.ThrowIfNull(line);
+
+            // Arrange.
+            TextLine textLine = GetTextLine(line);
+
+            LinesLengthChecker linesLengthChecker = GetLinesLengthChecker(
+                new FileSettings
+                {
+                    AllowLongStringDefinitions = false,
+                    MaximumLineLength = 10,
+                });
+
+            // Act.
+            (bool isAllowed, int lineLength) = linesLengthChecker.HasAllowedLineLength(textLine);
+
+            // Assert.
+            isAllowed.Should().BeFalse();
+
+            lineLength.Should().Be(line.Length);
+        }
+
         private static TextLine GetTextLine(string text)
         {
             return SourceText.From(text).Lines.Single();
@@ -174,7 +227,10 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
 
         private static LinesLengthChecker GetLinesLengthChecker(ISettings settings)
         {
-            return new LinesLengthChecker(settings, new MethodNamesChecker(settings));
+            return new LinesLengthChecker(
+                settings,
+                new MethodNamesChecker(settings),
+                new StringDefinitionsChecker(settings));
         }
     }
 }

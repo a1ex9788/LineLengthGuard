@@ -95,6 +95,7 @@ namespace LineLengthGuard.Settings.Parser
         private static FileSettings? GetFileSettingsFromParts(string[] parts)
         {
             bool? allowLongMethodNamesWithUnderscores = null;
+            bool? allowLongStringDefinitions = null;
             List<string>? excludedLineStarts = [];
             int? maximumLineLength = null;
 
@@ -110,7 +111,8 @@ namespace LineLengthGuard.Settings.Parser
                 switch (configuration.Key)
                 {
                     case "AllowLongMethodNamesWithUnderscores":
-                        bool boolParsed = bool.TryParse(configuration.StringValue, out bool boolValue);
+                        bool boolParsed = bool
+                            .TryParse(configuration.StringValue, out bool boolValue);
 
                         if (!boolParsed)
                         {
@@ -118,6 +120,17 @@ namespace LineLengthGuard.Settings.Parser
                         }
 
                         allowLongMethodNamesWithUnderscores = boolValue;
+                        break;
+
+                    case "AllowLongStringDefinitions":
+                        boolParsed = bool.TryParse(configuration.StringValue, out boolValue);
+
+                        if (!boolParsed)
+                        {
+                            return null;
+                        }
+
+                        allowLongStringDefinitions = boolValue;
                         break;
 
                     case "ExcludedLineStarts":
@@ -146,6 +159,7 @@ namespace LineLengthGuard.Settings.Parser
 
             return GetFileSettingsFromParsedValues(
                 allowLongMethodNamesWithUnderscores,
+                allowLongStringDefinitions,
                 excludedLineStarts,
                 maximumLineLength);
         }
@@ -211,6 +225,7 @@ namespace LineLengthGuard.Settings.Parser
 
         private static FileSettings GetFileSettingsFromParsedValues(
             bool? allowLongMethodNamesWithUnderscores,
+            bool? allowLongStringDefinitions,
             List<string>? excludedLineStarts,
             int? maximumLineLength)
         {
@@ -219,6 +234,11 @@ namespace LineLengthGuard.Settings.Parser
             if (allowLongMethodNamesWithUnderscores is not null)
             {
                 fileSettings.AllowLongMethodNamesWithUnderscores = allowLongMethodNamesWithUnderscores.Value;
+            }
+
+            if (allowLongStringDefinitions is not null)
+            {
+                fileSettings.AllowLongStringDefinitions = allowLongStringDefinitions.Value;
             }
 
             if (excludedLineStarts is not null && excludedLineStarts.Count > 0)

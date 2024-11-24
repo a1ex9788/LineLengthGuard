@@ -15,6 +15,7 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
             string settingsJSON = """
 {
   "AllowLongMethodNamesWithUnderscores": true,
+  "AllowLongStringDefinitions": true,
   "ExcludedLineStarts": [
     "Value"
   ],
@@ -31,6 +32,7 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
             settings.Should().NotBeNull();
 
             settings!.AllowLongMethodNamesWithUnderscores.Should().BeTrue();
+            settings!.AllowLongStringDefinitions.Should().BeTrue();
             settings!.ExcludedLineStarts.Should().BeEquivalentTo("Value");
             settings!.MaximumLineLength.Should().Be(5);
         }
@@ -42,6 +44,7 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
             string settingsJSON = """
 {
   "AllowLongMethodNamesWithUnderscores": false,
+  "AllowLongStringDefinitions": false,
   "ExcludedLineStarts": [
     "Value1",
     "Value2",
@@ -62,6 +65,8 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Parser
             settings.Should().NotBeNull();
 
             settings!.AllowLongMethodNamesWithUnderscores.Should().BeFalse();
+
+            settings!.AllowLongStringDefinitions.Should().BeFalse();
 
             settings!
                 .ExcludedLineStarts

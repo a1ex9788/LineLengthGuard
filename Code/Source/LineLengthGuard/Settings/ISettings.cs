@@ -6,6 +6,8 @@ namespace LineLengthGuard.Settings
     {
         bool AllowLongMethodNamesWithUnderscores { get; }
 
+        bool AllowLongStringDefinitions { get; }
+
         IReadOnlyCollection<string> ExcludedLineStarts { get; }
 
         int MaximumLineLength { get; }

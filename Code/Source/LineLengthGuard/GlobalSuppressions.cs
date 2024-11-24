@@ -1,6 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage(
+    "Design",
+    "MA0051:Method is too long",
+    Justification = "It is easier to understand in one long method.",
+    Scope = "member",
+    Target = "~M:LineLengthGuard.Settings.Parser.SettingsParser" +
+        ".GetFileSettingsFromParts(System.String[])~LineLengthGuard.Settings.FileSettings")]
+[assembly: SuppressMessage(
     "MicrosoftCodeAnalysisCorrectness",
     "RS1035:Do not use APIs banned for analyzers",
     Justification = "TODO: False positive, https://github.com/dotnet/roslyn-analyzers/issues/6467.",

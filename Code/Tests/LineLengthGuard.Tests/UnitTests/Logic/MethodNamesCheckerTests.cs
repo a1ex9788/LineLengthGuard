@@ -22,7 +22,7 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         [DataRow("    Aaaaa_Bbbbb_Ccccc()")]
         [DataRow("        Aaaaa_Bbbbb_Ccccc(")]
         [DataRow("        Aaaaa_Bbbbb_Ccccc()")]
-        public void IsAllowedMethodNameWithUnderscores_AllowAndContainsUnderscores_ReturnsTrue(string line)
+        public void IsAllowedMethodNameWithUnderscores_AllowAndMethodNameWithUnderscores_ReturnsTrue(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
 
@@ -46,7 +46,7 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         [DataRow("AaaBbbCcc()")]
         [DataRow("AaaaaBbbbbCcccc(")]
         [DataRow("AaaaaBbbbbCcccc()")]
-        public void IsAllowedMethodNameWithUnderscores_AllowAndDoesNotContainUnderscores_ReturnsFalse(string line)
+        public void IsAllowedMethodNameWithUnderscores_AllowAndNotMethodNameWithUnderscores_ReturnsFalse(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
 

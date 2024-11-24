@@ -9,11 +9,16 @@ namespace LineLengthGuard.Logic
     {
         private readonly ISettings settings;
         private readonly MethodNamesChecker methodNamesChecker;
+        private readonly StringDefinitionsChecker stringDefinitionsChecker;
 
-        public LinesLengthChecker(ISettings settings, MethodNamesChecker methodNamesChecker)
+        public LinesLengthChecker(
+            ISettings settings,
+            MethodNamesChecker methodNamesChecker,
+            StringDefinitionsChecker stringDefinitionsChecker)
         {
             this.settings = settings;
             this.methodNamesChecker = methodNamesChecker;
+            this.stringDefinitionsChecker = stringDefinitionsChecker;
         }
 
         public (bool IsAllowed, int LineLength) HasAllowedLineLength(TextLine textLine)
@@ -22,7 +27,8 @@ namespace LineLengthGuard.Logic
 
             bool isAllowed = this.IsLineLengthShorterThanMaximum(line)
                 || this.IsLineStartExcluded(line)
-                || this.methodNamesChecker.IsAllowedMethodNameWithUnderscores(line);
+                || this.methodNamesChecker.IsAllowedMethodNameWithUnderscores(line)
+                || this.stringDefinitionsChecker.IsAllowedLongStringDefinition(line);
 
             return (isAllowed, line.Length);
         }

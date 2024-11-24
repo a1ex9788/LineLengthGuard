@@ -21,6 +21,7 @@ Available settings are explained below:
 Key|Description
 -|-
 AllowLongMethodNamesWithUnderscores|A value that indicates if method names that contain underscores are allowed to exceed the maximum line length. Its default value is `false`.
+AllowLongStringDefinitions|A value that indicates if string definitions are allowed to exceed the maximum line length. For this setting to take effect, the right part of the equal sign must be on a single line. Its default value is `false`.
 ExcludedLineStarts|A collection of strings that make lines starting with any of them to be excluded from the analysis. Lines with any start are analysed by default.
 MaximumLineLength|Maximum number of characters that a line is allowed to have. Its default value is `120`.
 
@@ -36,11 +37,12 @@ Settings file must be imported into the project to be analysed in this way:
 
 ### Example
 
-An example of settings file is the following:
+An example of a complete settings file is the following:
 
 ```JSON
 {
   "AllowLongMethodNamesWithUnderscores": false,
+  "AllowLongStringDefinitions": false,
   "ExcludedLineStarts": [
     "// Filename: ",
     "namespace "
