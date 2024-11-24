@@ -43,13 +43,11 @@ namespace LineLengthGuard
 
             ISettings settings = GetSettings(context);
 
-            AllowedLineLengthChecker allowedLineLengthChecker = new AllowedLineLengthChecker(
-                settings,
-                new MethodNamesChecker(settings));
+            LinesLengthChecker linesLengthChecker = new LinesLengthChecker(settings, new MethodNamesChecker(settings));
 
             foreach (TextLine textLine in sourceText.Lines)
             {
-                (bool isAllowed, int lineLength) = allowedLineLengthChecker.Check(textLine);
+                (bool isAllowed, int lineLength) = linesLengthChecker.HasAllowedLineLength(textLine);
 
                 if (!isAllowed)
                 {

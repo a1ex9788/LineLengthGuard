@@ -5,18 +5,18 @@ using System.Linq;
 
 namespace LineLengthGuard.Logic
 {
-    internal sealed class AllowedLineLengthChecker
+    internal sealed class LinesLengthChecker
     {
         private readonly ISettings settings;
         private readonly MethodNamesChecker methodNamesChecker;
 
-        public AllowedLineLengthChecker(ISettings settings, MethodNamesChecker methodNamesChecker)
+        public LinesLengthChecker(ISettings settings, MethodNamesChecker methodNamesChecker)
         {
             this.settings = settings;
             this.methodNamesChecker = methodNamesChecker;
         }
 
-        public (bool IsAllowed, int LineLength) Check(TextLine textLine)
+        public (bool IsAllowed, int LineLength) HasAllowedLineLength(TextLine textLine)
         {
             string line = textLine.ToString();
 
