@@ -5,6 +5,8 @@ using System.Text;
 
 namespace LineLengthGuard.Settings.Parser
 {
+    // This class does not use any library for parsing JSON because it is so difficult to pack libraries in .NET
+    // analysers. It was not possible to make it work when building with MSBuild a project that consumes the analyser.
     internal sealed class SettingsParser : ISettingsParser
     {
         public ISettings? Parse(string settingsJSON)
