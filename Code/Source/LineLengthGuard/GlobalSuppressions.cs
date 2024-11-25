@@ -1,6 +1,13 @@
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage(
+    "Critical Code Smell",
+    "S1067:Expressions should not be too complex",
+    Justification = "It is okay.",
+    Scope = "member",
+    Target = "~M:LineLengthGuard.Logic.LinesLengthChecker" +
+        ".HasAllowedLineLength(Microsoft.CodeAnalysis.Text.TextLine)~System.ValueTuple{System.Boolean,System.Int32}")]
+[assembly: SuppressMessage(
     "Design",
     "MA0051:Method is too long",
     Justification = "It is easier to understand in one long method.",
@@ -32,6 +39,12 @@ using System.Diagnostics.CodeAnalysis;
     Justification = "It is wanted the name that way to match diagnostic identifier.",
     Scope = "type",
     Target = "~T:LineLengthGuard.LLG001Info")]
+[assembly: SuppressMessage(
+    "Minor Code Smell",
+    "S100:Methods and properties should be named in PascalCase",
+    Justification = "False positive.",
+    Scope = "member",
+    Target = "~M:LineLengthGuard.Logic.URLsChecker.ContainsURL(System.String)~System.Boolean")]
 [assembly: SuppressMessage(
     "Naming",
     "VSSpell001:Spell Check",

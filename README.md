@@ -10,6 +10,17 @@ Rule|Title|Description
 -|-|-
 `LLG001`|Line too long|Ensures that lines are not longer than the maximum established value. It can be configured by settings.
 
+## Default exclusions
+
+By default, there are some line patterns that are excluded from the analysis. They are considered as unbreakable so the analyser ignores them and does not report issues for them. Default excluded patterns are:
+
+Pattern|Description
+-|-
+`*<see cref="*"/>*`|References in documentation.
+`*http://* \| *https://*`|URLs.
+
+Apart from default exclusions, other ones can be configured with some available settings, explained in the following section.
+
 ## Settings
 
 A `LineLengthGuardSettings.json` file can be used to configure some settings of the analyser.

@@ -57,6 +57,49 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         }
 
         [DataTestMethod]
+        [DataRow("<see cref=\"Reference\"/>")]
+        [DataRow("http://server")]
+        [DataRow("https://server")]
+        public void HasAllowedLineLength_DefaultExcludedLinePattern_ReturnsTrue(string line)
+        {
+            ArgumentNullException.ThrowIfNull(line);
+
+            // Arrange.
+            TextLine textLine = GetTextLine(line);
+
+            LinesLengthChecker linesLengthChecker = GetLinesLengthChecker(new FileSettings { MaximumLineLength = 10 });
+
+            // Act.
+            (bool isAllowed, int lineLength) = linesLengthChecker.HasAllowedLineLength(textLine);
+
+            // Assert.
+            isAllowed.Should().BeTrue();
+
+            lineLength.Should().Be(line.Length);
+        }
+
+        [DataTestMethod]
+        [DataRow("<see aaaaa/>")]
+        [DataRow("htt://server")]
+        public void HasAllowedLineLength_NotDefaultExcludedLinePattern_ReturnsFalse(string line)
+        {
+            ArgumentNullException.ThrowIfNull(line);
+
+            // Arrange.
+            TextLine textLine = GetTextLine(line);
+
+            LinesLengthChecker linesLengthChecker = GetLinesLengthChecker(new FileSettings { MaximumLineLength = 10 });
+
+            // Act.
+            (bool isAllowed, int lineLength) = linesLengthChecker.HasAllowedLineLength(textLine);
+
+            // Assert.
+            isAllowed.Should().BeFalse();
+
+            lineLength.Should().Be(line.Length);
+        }
+
+        [DataTestMethod]
         [DataRow("aa")]
         [DataRow("aaaaa")]
         [DataRow("aaaaabbbb")]

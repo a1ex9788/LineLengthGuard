@@ -15,7 +15,10 @@ namespace LineLengthGuard.Tests.IntegrationTests
             string code = """
 namespace TestNamespace
 {
-    class TestClass
+    /// <summary>
+    ///     <see cref="TestNamespace.TestClass.Aaaaabbbbbcccccdddddeeeeefffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooo"/>
+    /// </summary>
+    internal class TestClass
     {
         // Shorter than maximum length.
         private string a = "aaaaabbbbbcccccdddddeeeeefffffggggghhhhhiiiiijjjjj";
@@ -36,7 +39,7 @@ namespace TestNamespace
             string code = """
 namespace TestNamespace
 {
-    class TestClass
+    internal class TestClass
     {
         // Longer than maximum length.
         private string a = "aaaaabbbbbcccccdddddeeeeefffffggggghhhhhiiiiijjjjjkkkkklllllmmmmmnnnnnooooopppppqqqqqrrrrrs";

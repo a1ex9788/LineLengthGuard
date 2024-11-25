@@ -26,11 +26,18 @@ namespace LineLengthGuard.Logic
             string line = textLine.ToString();
 
             bool isAllowed = this.IsLineLengthShorterThanMaximum(line)
+                || ContainsDefaultExcludedLinePattern(line)
                 || this.IsLineStartExcluded(line)
                 || this.methodNamesChecker.IsAllowedMethodNameWithUnderscores(line)
                 || this.stringDefinitionsChecker.IsAllowedLongStringDefinition(line);
 
             return (isAllowed, line.Length);
+        }
+
+        private static bool ContainsDefaultExcludedLinePattern(string line)
+        {
+            return ReferencesInDocumentationChecker.ContainsReferenceInDocumentation(line)
+                || URLsChecker.ContainsURL(line);
         }
 
         private bool IsLineLengthShorterThanMaximum(string line)

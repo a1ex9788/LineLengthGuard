@@ -8,11 +8,32 @@ using System.Diagnostics.CodeAnalysis;
     Target = "~M:LineLengthGuard.Tests.IntegrationTests.LLG001IntegrationTests" +
         ".LLG001_LinesLongerThanMaximumLength_ReportsExpectedDiagnostics~System.Threading.Tasks.Task")]
 [assembly: SuppressMessage(
+    "Layout",
+    "MEN002:Line is too long",
+    Justification = "It is a test case.",
+    Scope = "member",
+    Target = "~M:LineLengthGuard.Tests.IntegrationTests.LLG001IntegrationTests" +
+        ".LLG001_LinesShorterThanMaximumLength_ReportsNoDiagnostics~System.Threading.Tasks.Task")]
+[assembly: SuppressMessage(
     "Maintainability",
     "CA1515:Consider making public types internal",
     Justification = "Tests framework only detects tests in public classes.",
     Scope = "namespaceAndDescendants",
     Target = "~N:LineLengthGuard.Tests")]
+[assembly: SuppressMessage(
+    "Major Code Smell",
+    "S4144:Methods should not have identical implementations",
+    Justification = "It has different test cases",
+    Scope = "member",
+    Target = "~M:LineLengthGuard.Tests.UnitTests.Logic.LinesLengthCheckerTests" +
+        ".HasAllowedLineLength_DefaultExcludedLinePattern_ReturnsTrue(System.String)")]
+[assembly: SuppressMessage(
+    "Major Code Smell",
+    "S4144:Methods should not have identical implementations",
+    Justification = "It has different test cases",
+    Scope = "member",
+    Target = "~M:LineLengthGuard.Tests.UnitTests.Logic.LinesLengthCheckerTests" +
+        ".HasAllowedLineLength_NotDefaultExcludedLinePattern_ReturnsFalse(System.String)")]
 [assembly: SuppressMessage(
     "Minor Code Smell",
     "S100:Methods and properties should be named in PascalCase",

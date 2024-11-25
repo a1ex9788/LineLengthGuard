@@ -31,7 +31,6 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
                 new FileSettings
                 {
                     AllowLongMethodNamesWithUnderscores = true,
-                    MaximumLineLength = 10,
                 });
 
             // Act.
@@ -55,7 +54,6 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
                 new FileSettings
                 {
                     AllowLongMethodNamesWithUnderscores = true,
-                    MaximumLineLength = 10,
                 });
 
             // Act.
@@ -83,7 +81,6 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
                 new FileSettings
                 {
                     AllowLongMethodNamesWithUnderscores = false,
-                    MaximumLineLength = 10,
                 });
 
             // Act.

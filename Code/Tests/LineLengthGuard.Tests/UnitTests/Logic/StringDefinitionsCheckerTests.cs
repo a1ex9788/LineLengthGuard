@@ -23,7 +23,6 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
                 new FileSettings
                 {
                     AllowLongStringDefinitions = true,
-                    MaximumLineLength = 10,
                 });
 
             // Act.
@@ -55,7 +54,6 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
                 new FileSettings
                 {
                     AllowLongStringDefinitions = true,
-                    MaximumLineLength = 10,
                 });
 
             // Act.
@@ -88,7 +86,6 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
                 new FileSettings
                 {
                     AllowLongStringDefinitions = false,
-                    MaximumLineLength = 10,
                 });
 
             // Act.
