@@ -1,18 +1,17 @@
-using System;
-using System.Text.RegularExpressions;
+using LineLengthGuard.Logic.Utilities;
 
 namespace LineLengthGuard.Logic
 {
-    internal static class ReferencesInDocumentationChecker
+    internal sealed class ReferencesInDocumentationChecker : RegexMatchesChecker
     {
-        private const string ReferenceInDocumentationPattern = "<see cref=\".+\"/>";
-
-        private static readonly Regex Regex =
-            new Regex(ReferenceInDocumentationPattern, RegexOptions.None, TimeSpan.FromSeconds(1));
-
-        public static bool ContainsReferenceInDocumentation(string line)
+        public ReferencesInDocumentationChecker()
+            : base("<see cref=\".+\"/>")
         {
-            return Regex.IsMatch(line);
+        }
+
+        public bool ContainsReferenceInDocumentation(string line)
+        {
+            return this.IsMatch(line);
         }
     }
 }

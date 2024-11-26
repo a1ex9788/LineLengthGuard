@@ -2,7 +2,6 @@ using FluentAssertions;
 using LineLengthGuard.Logic;
 using LineLengthGuard.Settings;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace LineLengthGuard.Tests.UnitTests.Logic
 {
@@ -24,8 +23,6 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         [DataRow("        Aaaaa_Bbbbb_Ccccc()")]
         public void IsAllowedMethodNameWithUnderscores_AllowAndMethodNameWithUnderscores_ReturnsTrue(string line)
         {
-            ArgumentNullException.ThrowIfNull(line);
-
             // Arrange.
             MethodNamesChecker methodNamesChecker = new MethodNamesChecker(
                 new FileSettings
@@ -47,8 +44,6 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         [DataRow("AaaaaBbbbbCcccc()")]
         public void IsAllowedMethodNameWithUnderscores_AllowAndNotMethodNameWithUnderscores_ReturnsFalse(string line)
         {
-            ArgumentNullException.ThrowIfNull(line);
-
             // Arrange.
             MethodNamesChecker methodNamesChecker = new MethodNamesChecker(
                 new FileSettings
@@ -74,8 +69,6 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         [DataRow("Aaaaa_Bbbbb_Ccccc()")]
         public void IsAllowedMethodNameWithUnderscores_DoNotAllow_ReturnsFalse(string line)
         {
-            ArgumentNullException.ThrowIfNull(line);
-
             // Arrange.
             MethodNamesChecker methodNamesChecker = new MethodNamesChecker(
                 new FileSettings

@@ -1,7 +1,6 @@
 using FluentAssertions;
 using LineLengthGuard.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace LineLengthGuard.Tests.UnitTests.Logic
 {
@@ -18,10 +17,11 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         [DataRow("///    http://one.server")]
         public void ContainsURL_URL_ReturnsTrue(string line)
         {
-            ArgumentNullException.ThrowIfNull(line);
+            // Arrange.
+            URLsChecker urlsChecker = new URLsChecker();
 
             // Act.
-            bool containsURL = URLsChecker.ContainsURL(line);
+            bool containsURL = urlsChecker.ContainsURL(line);
 
             // Assert.
             containsURL.Should().BeTrue();
@@ -34,10 +34,11 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         [DataRow("///    http://")]
         public void ContainsURL_NotURL_ReturnsFalse(string line)
         {
-            ArgumentNullException.ThrowIfNull(line);
+            // Arrange.
+            URLsChecker urlsChecker = new URLsChecker();
 
             // Act.
-            bool containsURL = URLsChecker.ContainsURL(line);
+            bool containsURL = urlsChecker.ContainsURL(line);
 
             // Assert.
             containsURL.Should().BeFalse();

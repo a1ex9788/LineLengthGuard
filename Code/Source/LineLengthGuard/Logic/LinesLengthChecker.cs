@@ -9,16 +9,22 @@ namespace LineLengthGuard.Logic
     {
         private readonly ISettings settings;
         private readonly MethodNamesChecker methodNamesChecker;
+        private readonly ReferencesInDocumentationChecker referencesInDocumentationChecker;
         private readonly StringDefinitionsChecker stringDefinitionsChecker;
+        private readonly URLsChecker urlsChecker;
 
         public LinesLengthChecker(
             ISettings settings,
             MethodNamesChecker methodNamesChecker,
-            StringDefinitionsChecker stringDefinitionsChecker)
+            ReferencesInDocumentationChecker referencesInDocumentationChecker,
+            StringDefinitionsChecker stringDefinitionsChecker,
+            URLsChecker urlsChecker)
         {
             this.settings = settings;
             this.methodNamesChecker = methodNamesChecker;
+            this.referencesInDocumentationChecker = referencesInDocumentationChecker;
             this.stringDefinitionsChecker = stringDefinitionsChecker;
+            this.urlsChecker = urlsChecker;
         }
 
         public (bool IsAllowed, int LineLength) HasAllowedLineLength(TextLine textLine)
@@ -26,7 +32,7 @@ namespace LineLengthGuard.Logic
             string line = textLine.ToString();
 
             bool isAllowed = this.IsLineLengthShorterThanMaximum(line)
-                || ContainsDefaultExcludedLinePattern(line)
+                || this.ContainsDefaultExcludedLinePattern(line)
                 || this.IsLineStartExcluded(line)
                 || this.methodNamesChecker.IsAllowedMethodNameWithUnderscores(line)
                 || this.stringDefinitionsChecker.IsAllowedLongStringDefinition(line);
@@ -34,15 +40,15 @@ namespace LineLengthGuard.Logic
             return (isAllowed, line.Length);
         }
 
-        private static bool ContainsDefaultExcludedLinePattern(string line)
-        {
-            return ReferencesInDocumentationChecker.ContainsReferenceInDocumentation(line)
-                || URLsChecker.ContainsURL(line);
-        }
-
         private bool IsLineLengthShorterThanMaximum(string line)
         {
             return line.Length <= this.settings.MaximumLineLength;
+        }
+
+        private bool ContainsDefaultExcludedLinePattern(string line)
+        {
+            return this.referencesInDocumentationChecker.ContainsReferenceInDocumentation(line)
+                || this.urlsChecker.ContainsURL(line);
         }
 
         private bool IsLineStartExcluded(string line)

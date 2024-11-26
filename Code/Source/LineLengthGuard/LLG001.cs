@@ -46,7 +46,9 @@ namespace LineLengthGuard
             LinesLengthChecker linesLengthChecker = new LinesLengthChecker(
                 settings,
                 new MethodNamesChecker(settings),
-                new StringDefinitionsChecker(settings));
+                new ReferencesInDocumentationChecker(),
+                new StringDefinitionsChecker(settings),
+                new URLsChecker());
 
             foreach (TextLine textLine in sourceText.Lines)
             {

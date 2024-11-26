@@ -2,7 +2,6 @@ using FluentAssertions;
 using LineLengthGuard.Logic;
 using LineLengthGuard.Settings;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace LineLengthGuard.Tests.UnitTests.Logic
 {
@@ -16,8 +15,6 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         [DataRow("        \"aaaaabbbbb\";")]
         public void IsAllowedLongStringDefinition_AllowAndLongStringDefinition_ReturnsTrue(string line)
         {
-            ArgumentNullException.ThrowIfNull(line);
-
             // Arrange.
             StringDefinitionsChecker stringDefinitionsChecker = new StringDefinitionsChecker(
                 new FileSettings
@@ -47,8 +44,6 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         [DataRow("        \"aaaaabbbbb\"")]
         public void IsAllowedLongStringDefinition_AllowAndNotLongStringDefinition_ReturnsFalse(string line)
         {
-            ArgumentNullException.ThrowIfNull(line);
-
             // Arrange.
             StringDefinitionsChecker stringDefinitionsChecker = new StringDefinitionsChecker(
                 new FileSettings
@@ -79,8 +74,6 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         [DataRow("\"aaaaabbbbbccccc\"")]
         public void IsAllowedLongStringDefinition_DoNotAllow_ReturnsFalse(string line)
         {
-            ArgumentNullException.ThrowIfNull(line);
-
             // Arrange.
             StringDefinitionsChecker stringDefinitionsChecker = new StringDefinitionsChecker(
                 new FileSettings

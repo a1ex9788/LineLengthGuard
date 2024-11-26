@@ -1,17 +1,17 @@
-using System;
-using System.Text.RegularExpressions;
+using LineLengthGuard.Logic.Utilities;
 
 namespace LineLengthGuard.Logic
 {
-    internal static class URLsChecker
+    internal sealed class URLsChecker : RegexMatchesChecker
     {
-        private const string UrlPattern = "http[s]?://.+";
-
-        private static readonly Regex Regex = new Regex(UrlPattern, RegexOptions.None, TimeSpan.FromSeconds(1));
-
-        public static bool ContainsURL(string line)
+        public URLsChecker()
+            : base("http[s]?://.+")
         {
-            return Regex.IsMatch(line);
+        }
+
+        public bool ContainsURL(string line)
+        {
+            return this.IsMatch(line);
         }
     }
 }

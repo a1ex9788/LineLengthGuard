@@ -1,7 +1,6 @@
 using FluentAssertions;
 using LineLengthGuard.Logic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 
 namespace LineLengthGuard.Tests.UnitTests.Logic
 {
@@ -18,10 +17,11 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         [DataRow("///    <see cref=\"ClassReference\"/>")]
         public void ContainsReferenceInDocumentation_ReferenceInDocumentation_ReturnsTrue(string line)
         {
-            ArgumentNullException.ThrowIfNull(line);
+            // Arrange.
+            ReferencesInDocumentationChecker referencesInDocumentationChecker = new ReferencesInDocumentationChecker();
 
             // Act.
-            bool containsReferenceInDocumentation = ReferencesInDocumentationChecker
+            bool containsReferenceInDocumentation = referencesInDocumentationChecker
                 .ContainsReferenceInDocumentation(line);
 
             // Assert.
@@ -37,10 +37,11 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         [DataRow("///    <see />")]
         public void ContainsReferenceInDocumentation_NotReferenceInDocumentation_ReturnsFalse(string line)
         {
-            ArgumentNullException.ThrowIfNull(line);
+            // Arrange.
+            ReferencesInDocumentationChecker referencesInDocumentationChecker = new ReferencesInDocumentationChecker();
 
             // Act.
-            bool containsReferenceInDocumentation = ReferencesInDocumentationChecker
+            bool containsReferenceInDocumentation = referencesInDocumentationChecker
                 .ContainsReferenceInDocumentation(line);
 
             // Assert.

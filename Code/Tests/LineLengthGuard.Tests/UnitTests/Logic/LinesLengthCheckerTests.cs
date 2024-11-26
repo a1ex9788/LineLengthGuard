@@ -273,7 +273,9 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
             return new LinesLengthChecker(
                 settings,
                 new MethodNamesChecker(settings),
-                new StringDefinitionsChecker(settings));
+                new ReferencesInDocumentationChecker(),
+                new StringDefinitionsChecker(settings),
+                new URLsChecker());
         }
     }
 }
