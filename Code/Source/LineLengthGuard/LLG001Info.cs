@@ -6,9 +6,9 @@ namespace LineLengthGuard
 {
     internal static class LLG001Info
     {
-        public const string DiagnosticId = nameof(LLG001);
+        private const string DiagnosticId = nameof(LLG001);
 
-        public const string Category = "Style";
+        private const string Category = "Style";
 
         private static readonly LocalizableString Title = new LocalizableResourceString(
             nameof(Resources.AnalyzerTitle),
