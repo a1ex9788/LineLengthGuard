@@ -1,6 +1,4 @@
-using LineLengthGuard.Logic.Utilities;
-
-namespace LineLengthGuard.Logic
+namespace LineLengthGuard.Logic.Utilities
 {
     internal sealed class URLsChecker : RegexMatchesChecker
     {

@@ -1,9 +1,9 @@
 using FluentAssertions;
-using LineLengthGuard.Logic;
+using LineLengthGuard.Logic.Utilities;
 using LineLengthGuard.Settings;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace LineLengthGuard.Tests.UnitTests.Logic
+namespace LineLengthGuard.Tests.UnitTests.Logic.Utilities
 {
     [TestClass]
     public class MethodNamesCheckerTests

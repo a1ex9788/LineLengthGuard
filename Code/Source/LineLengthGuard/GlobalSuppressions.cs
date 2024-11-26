@@ -44,7 +44,7 @@ using System.Diagnostics.CodeAnalysis;
     "S100:Methods and properties should be named in PascalCase",
     Justification = "False positive.",
     Scope = "member",
-    Target = "~M:LineLengthGuard.Logic.URLsChecker.ContainsURL(System.String)~System.Boolean")]
+    Target = "~M:LineLengthGuard.Logic.Utilities.URLsChecker.ContainsURL(System.String)~System.Boolean")]
 [assembly: SuppressMessage(
     "Naming",
     "VSSpell001:Spell Check",

@@ -1,6 +1,6 @@
 using LineLengthGuard.Settings;
 
-namespace LineLengthGuard.Logic
+namespace LineLengthGuard.Logic.Utilities
 {
     internal sealed class StringDefinitionsChecker
     {

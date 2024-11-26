@@ -1,8 +1,8 @@
 using FluentAssertions;
-using LineLengthGuard.Logic;
+using LineLengthGuard.Logic.Utilities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace LineLengthGuard.Tests.UnitTests.Logic
+namespace LineLengthGuard.Tests.UnitTests.Logic.Utilities
 {
     [TestClass]
     public class URLsCheckerTests

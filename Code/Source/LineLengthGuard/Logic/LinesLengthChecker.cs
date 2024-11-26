@@ -1,3 +1,4 @@
+using LineLengthGuard.Logic.Utilities;
 using LineLengthGuard.Settings;
 using Microsoft.CodeAnalysis.Text;
 using System;

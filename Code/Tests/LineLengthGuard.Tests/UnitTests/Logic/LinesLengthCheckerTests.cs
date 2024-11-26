@@ -1,5 +1,6 @@
 using FluentAssertions;
 using LineLengthGuard.Logic;
+using LineLengthGuard.Logic.Utilities;
 using LineLengthGuard.Settings;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

@@ -1,4 +1,5 @@
 using LineLengthGuard.Logic;
+using LineLengthGuard.Logic.Utilities;
 using LineLengthGuard.Settings;
 using LineLengthGuard.Settings.Parser;
 using LineLengthGuard.Settings.Provider;
