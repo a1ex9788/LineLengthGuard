@@ -10,7 +10,6 @@ using System;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using System.Threading;
 
 namespace LineLengthGuard
 {
@@ -78,10 +77,7 @@ namespace LineLengthGuard
                 throw new InvalidOperationException();
             }
 
-            using CancellationTokenSource cancellationTokenSource =
-                new CancellationTokenSource(TimeSpan.FromSeconds(10));
-
-            SourceText sourceText = settingsFiles.Single().GetText(cancellationTokenSource.Token)
+            SourceText sourceText = settingsFiles.Single().GetText(context.CancellationToken)
                 ?? throw new InvalidOperationException();
 
             return SettingsProvider.Get(sourceText.ToString());
