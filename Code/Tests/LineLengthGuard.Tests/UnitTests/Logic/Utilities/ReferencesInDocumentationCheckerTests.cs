@@ -15,6 +15,8 @@ namespace LineLengthGuard.Tests.UnitTests.Logic.Utilities
         [DataRow("<see cref=\"Class.MethodReference()\"/>")]
         [DataRow("<see cref=\"Namespace.Class.MethodReference()\"/>")]
         [DataRow("///    <see cref=\"ClassReference\"/>")]
+        [DataRow("<see cref=\"ClassReference\"/> aaaaa")]
+        [DataRow("///    <see cref=\"ClassReference\"/> aaaaa")]
         public void ContainsReferenceInDocumentation_ReferenceInDocumentation_ReturnsTrue(string line)
         {
             // Arrange.
@@ -30,11 +32,14 @@ namespace LineLengthGuard.Tests.UnitTests.Logic.Utilities
 
         [DataTestMethod]
         [DataRow("<see />")]
-        [DataRow("<cref=\"Reference\"/>")]
-        [DataRow("<see cref=\"Reference\"")]
-        [DataRow("see cref=\"Reference\"/>")]
+        [DataRow("<see cref=\"Class Reference\"/>")]
+        [DataRow("<cref=\"ClassReference\"/>")]
+        [DataRow("<see cref=\"ClassReference\"")]
+        [DataRow("see cref=\"ClassReference\"/>")]
         [DataRow("<see cref=\"\"/>")]
         [DataRow("///    <see />")]
+        [DataRow("<see /> aaaaa")]
+        [DataRow("///    <see /> aaaaa")]
         public void ContainsReferenceInDocumentation_NotReferenceInDocumentation_ReturnsFalse(string line)
         {
             // Arrange.

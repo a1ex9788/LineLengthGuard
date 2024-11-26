@@ -9,10 +9,8 @@ namespace LineLengthGuard.Tests.UnitTests.Logic.Utilities
     public class StringDefinitionsCheckerTests
     {
         [DataTestMethod]
-        [DataRow("\"aaaaabbbbb\";")]
-        [DataRow("\"aaaaabbbbbccccc\";")]
-        [DataRow("\"aaaaabbbbbcccccddddd\";")]
-        [DataRow("        \"aaaaabbbbb\";")]
+        [DataRow("\"aaa\";")]
+        [DataRow("    \"aaa\";")]
         public void IsAllowedLongStringDefinition_AllowAndLongStringDefinition_ReturnsTrue(string line)
         {
             // Arrange.
@@ -30,18 +28,12 @@ namespace LineLengthGuard.Tests.UnitTests.Logic.Utilities
         }
 
         [DataTestMethod]
-        [DataRow("Aaaaa\";")]
-        [DataRow("\"Aaaaa;")]
-        [DataRow("\"Aaaaa\"")]
-        [DataRow("aaaaabbbbb\";")]
-        [DataRow("\"aaaaabbbbb;")]
-        [DataRow("\"aaaaabbbbb\"")]
-        [DataRow("aaaaabbbbbccccc\";")]
-        [DataRow("\"aaaaabbbbbccccc;")]
-        [DataRow("\"aaaaabbbbbccccc\"")]
-        [DataRow("        aaaaabbbbb\";")]
-        [DataRow("        \"aaaaabbbbb;")]
-        [DataRow("        \"aaaaabbbbb\"")]
+        [DataRow("aaa\";")]
+        [DataRow("\"aaa;")]
+        [DataRow("\"aaa\"")]
+        [DataRow("    aaa\";")]
+        [DataRow("    \"aaa;")]
+        [DataRow("    \"aaa\"")]
         public void IsAllowedLongStringDefinition_AllowAndNotLongStringDefinition_ReturnsFalse(string line)
         {
             // Arrange.
@@ -59,19 +51,14 @@ namespace LineLengthGuard.Tests.UnitTests.Logic.Utilities
         }
 
         [DataTestMethod]
-        [DataRow("\"Aaaaa\";")]
-        [DataRow("\"aaaaabbbbb\";")]
-        [DataRow("\"aaaaabbbbbccccc\";")]
-        [DataRow("        \"aaaaabbbbb\";")]
-        [DataRow("Aaaaa\";")]
-        [DataRow("\"Aaaaa;")]
-        [DataRow("\"Aaaaa\"")]
-        [DataRow("aaaaabbbbb\";")]
-        [DataRow("\"aaaaabbbbb;")]
-        [DataRow("\"aaaaabbbbb\"")]
-        [DataRow("aaaaabbbbbccccc\";")]
-        [DataRow("\"aaaaabbbbbccccc;")]
-        [DataRow("\"aaaaabbbbbccccc\"")]
+        [DataRow("\"aaa\";")]
+        [DataRow("    \"aaa\";")]
+        [DataRow("aaa\";")]
+        [DataRow("\"aaa;")]
+        [DataRow("\"aaa\"")]
+        [DataRow("    aaa\";")]
+        [DataRow("    \"aaa;")]
+        [DataRow("    \"aaa\"")]
         public void IsAllowedLongStringDefinition_DoNotAllow_ReturnsFalse(string line)
         {
             // Arrange.

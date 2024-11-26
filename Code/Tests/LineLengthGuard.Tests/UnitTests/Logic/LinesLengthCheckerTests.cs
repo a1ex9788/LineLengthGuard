@@ -58,7 +58,7 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         }
 
         [DataTestMethod]
-        [DataRow("<see cref=\"Reference\"/>")]
+        [DataRow("<see cref=\"ClassReference\"/>")]
         [DataRow("http://server")]
         [DataRow("https://server")]
         public void HasAllowedLineLength_DefaultExcludedLinePattern_ReturnsTrue(string line)
@@ -68,7 +68,7 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
             // Arrange.
             TextLine textLine = GetTextLine(line);
 
-            LinesLengthChecker linesLengthChecker = GetLinesLengthChecker(new FileSettings { MaximumLineLength = 10 });
+            LinesLengthChecker linesLengthChecker = GetLinesLengthChecker(new FileSettings { MaximumLineLength = 1 });
 
             // Act.
             (bool isAllowed, int lineLength) = linesLengthChecker.HasAllowedLineLength(textLine);
@@ -80,7 +80,7 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         }
 
         [DataTestMethod]
-        [DataRow("<see aaaaa/>")]
+        [DataRow("<see aaa/>")]
         [DataRow("htt://server")]
         public void HasAllowedLineLength_NotDefaultExcludedLinePattern_ReturnsFalse(string line)
         {
@@ -89,7 +89,7 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
             // Arrange.
             TextLine textLine = GetTextLine(line);
 
-            LinesLengthChecker linesLengthChecker = GetLinesLengthChecker(new FileSettings { MaximumLineLength = 10 });
+            LinesLengthChecker linesLengthChecker = GetLinesLengthChecker(new FileSettings { MaximumLineLength = 1 });
 
             // Act.
             (bool isAllowed, int lineLength) = linesLengthChecker.HasAllowedLineLength(textLine);
@@ -102,12 +102,9 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
 
         [DataTestMethod]
         [DataRow("aa")]
-        [DataRow("aaaaa")]
-        [DataRow("aaaaabbbb")]
-        [DataRow("aaaaabbbbb")]
-        [DataRow("aaaaabbbbbc")]
-        [DataRow("aaaaabbbbbccccc")]
-        [DataRow("aaaaabbbbbcccccddddd")]
+        [DataRow("aaa")]
+        [DataRow("aaabb")]
+        [DataRow("aaabbb")]
         public void HasAllowedLineLength_ExcludedStart_ReturnsTrue(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
@@ -119,7 +116,7 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
                 new FileSettings
                 {
                     ExcludedLineStarts = [line[0..1]],
-                    MaximumLineLength = 10,
+                    MaximumLineLength = 1,
                 });
 
             // Act.
@@ -132,9 +129,10 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         }
 
         [DataTestMethod]
-        [DataRow("aaaaabbbbbc")]
-        [DataRow("aaaaabbbbbccccc")]
-        [DataRow("aaaaabbbbbcccccddddd")]
+        [DataRow("aa")]
+        [DataRow("aaa")]
+        [DataRow("aaabb")]
+        [DataRow("aaabbb")]
         public void HasAllowedLineLength_NotExcludedStart_ReturnsFalse(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
@@ -146,7 +144,7 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
                 new FileSettings
                 {
                     ExcludedLineStarts = [],
-                    MaximumLineLength = 10,
+                    MaximumLineLength = 1,
                 });
 
             // Act.
@@ -159,9 +157,8 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         }
 
         [DataTestMethod]
-        [DataRow("A_B_C()")]
+        [DataRow("Aaa_Bbb()")]
         [DataRow("Aaa_Bbb_Ccc()")]
-        [DataRow("Aaaaa_Bbbbb_Ccccc()")]
         public void HasAllowedLineLength_AllowedMethodNameWithUnderscores_ReturnsTrue(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
@@ -173,7 +170,7 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
                 new FileSettings
                 {
                     AllowLongMethodNamesWithUnderscores = true,
-                    MaximumLineLength = 10,
+                    MaximumLineLength = 1,
                 });
 
             // Act.
@@ -186,8 +183,8 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         }
 
         [DataTestMethod]
+        [DataRow("Aaa_Bbb()")]
         [DataRow("Aaa_Bbb_Ccc()")]
-        [DataRow("Aaaaa_Bbbbb_Ccccc()")]
         public void HasAllowedLineLength_NotAllowedMethodNameWithUnderscores_ReturnsFalse(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
@@ -199,7 +196,7 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
                 new FileSettings
                 {
                     AllowLongMethodNamesWithUnderscores = false,
-                    MaximumLineLength = 10,
+                    MaximumLineLength = 1,
                 });
 
             // Act.
@@ -212,9 +209,8 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         }
 
         [DataTestMethod]
-        [DataRow("\"Aaaaa\";")]
-        [DataRow("\"aaaaabbbbb\";")]
-        [DataRow("\"aaaaabbbbbccccc\";")]
+        [DataRow("\"aaa\";")]
+        [DataRow("\"aaabbb\";")]
         public void HasAllowedLineLength_AllowLongStringDefinitions_ReturnsTrue(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
@@ -226,7 +222,7 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
                 new FileSettings
                 {
                     AllowLongStringDefinitions = true,
-                    MaximumLineLength = 10,
+                    MaximumLineLength = 1,
                 });
 
             // Act.
@@ -239,8 +235,8 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
         }
 
         [DataTestMethod]
-        [DataRow("\"aaaaabbbbb\";")]
-        [DataRow("\"aaaaabbbbbccccc\";")]
+        [DataRow("\"aaa\";")]
+        [DataRow("\"aaabbb\";")]
         public void HasAllowedLineLength_NotAllowLongStringDefinitions_ReturnsFalse(string line)
         {
             ArgumentNullException.ThrowIfNull(line);
@@ -252,7 +248,7 @@ namespace LineLengthGuard.Tests.UnitTests.Logic
                 new FileSettings
                 {
                     AllowLongStringDefinitions = false,
-                    MaximumLineLength = 10,
+                    MaximumLineLength = 1,
                 });
 
             // Act.

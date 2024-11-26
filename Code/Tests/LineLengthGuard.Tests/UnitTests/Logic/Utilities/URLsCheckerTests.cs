@@ -15,6 +15,8 @@ namespace LineLengthGuard.Tests.UnitTests.Logic.Utilities
         [DataRow("https://a.different.server")]
         [DataRow("https://another-server")]
         [DataRow("///    http://one.server")]
+        [DataRow("http://one.server aaaaa")]
+        [DataRow("///    http://one.server aaaaa")]
         public void ContainsURL_URL_ReturnsTrue(string line)
         {
             // Arrange.
@@ -32,6 +34,8 @@ namespace LineLengthGuard.Tests.UnitTests.Logic.Utilities
         [DataRow("https://")]
         [DataRow("htt://server")]
         [DataRow("///    http://")]
+        [DataRow("http:// aaaaa")]
+        [DataRow("///    http:// aaaaa")]
         public void ContainsURL_NotURL_ReturnsFalse(string line)
         {
             // Arrange.
