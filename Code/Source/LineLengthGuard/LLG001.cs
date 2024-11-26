@@ -16,6 +16,7 @@ namespace LineLengthGuard
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class LLG001 : DiagnosticAnalyzer
     {
+        // Static field holds an instance to avoid recreating the object.
         private static readonly SettingsProvider SettingsProvider = new SettingsProvider(new SettingsParser());
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => LLG001Info.SupportedDiagnostics;
@@ -31,6 +32,7 @@ namespace LineLengthGuard
 
             context.EnableConcurrentExecution();
 
+            // Registered action is executed once for every code document.
             context.RegisterSyntaxTreeAction(AnalyzeSyntaxTree);
         }
 
