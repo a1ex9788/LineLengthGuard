@@ -10,7 +10,15 @@ namespace LineLengthGuard.Tests.UnitTests.Logic.Utilities
     {
         [DataTestMethod]
         [DataRow("\"aaa\";")]
+        [DataRow("$\"aaa\";")]
+        [DataRow("@\"aaa\";")]
+        [DataRow("$@\"aaa\";")]
+        [DataRow("@$\"aaa\";")]
         [DataRow("    \"aaa\";")]
+        [DataRow("    $\"aaa\";")]
+        [DataRow("    @\"aaa\";")]
+        [DataRow("    $@\"aaa\";")]
+        [DataRow("    @$\"aaa\";")]
         public void IsAllowedLongStringDefinition_AllowAndLongStringDefinition_ReturnsTrue(string line)
         {
             // Arrange.
@@ -52,7 +60,15 @@ namespace LineLengthGuard.Tests.UnitTests.Logic.Utilities
 
         [DataTestMethod]
         [DataRow("\"aaa\";")]
+        [DataRow("$\"aaa\";")]
+        [DataRow("@\"aaa\";")]
+        [DataRow("$@\"aaa\";")]
+        [DataRow("@$\"aaa\";")]
         [DataRow("    \"aaa\";")]
+        [DataRow("    $\"aaa\";")]
+        [DataRow("    @\"aaa\";")]
+        [DataRow("    $@\"aaa\";")]
+        [DataRow("    @$\"aaa\";")]
         [DataRow("aaa\";")]
         [DataRow("\"aaa;")]
         [DataRow("\"aaa\"")]
