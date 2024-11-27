@@ -36,14 +36,14 @@ namespace LineLengthGuard
             context.RegisterSyntaxTreeAction(AnalyzeSyntaxTree);
         }
 
-        private static void AnalyzeSyntaxTree(SyntaxTreeAnalysisContext context)
+        private static void AnalyzeSyntaxTree(SyntaxTreeAnalysisContext syntaxTreeAnalysisContext)
         {
-            if (!context.Tree.TryGetText(out SourceText? sourceText))
+            if (!syntaxTreeAnalysisContext.Tree.TryGetText(out SourceText? sourceText))
             {
                 return;
             }
 
-            ISettings settings = GetSettings(context);
+            ISettings settings = GetSettings(syntaxTreeAnalysisContext);
 
             LinesLengthChecker linesLengthChecker = new LinesLengthChecker(
                 settings,
@@ -58,14 +58,14 @@ namespace LineLengthGuard
 
                 if (!isAllowed)
                 {
-                    ReportDiagnostic(context, settings.MaximumLineLength, textLine, lineLength);
+                    ReportDiagnostic(syntaxTreeAnalysisContext, settings.MaximumLineLength, textLine, lineLength);
                 }
             }
         }
 
-        private static ISettings GetSettings(SyntaxTreeAnalysisContext context)
+        private static ISettings GetSettings(SyntaxTreeAnalysisContext syntaxTreeAnalysisContext)
         {
-            AdditionalText[] settingsFiles = context.Options.AdditionalFiles
+            AdditionalText[] settingsFiles = syntaxTreeAnalysisContext.Options.AdditionalFiles
                 .Where(at => Path.GetFileName(at.Path) == Constants.SettingsFileName)
                 .ToArray();
 
@@ -79,24 +79,24 @@ namespace LineLengthGuard
                 throw new InvalidOperationException();
             }
 
-            SourceText sourceText = settingsFiles.Single().GetText(context.CancellationToken)
+            SourceText sourceText = settingsFiles.Single().GetText(syntaxTreeAnalysisContext.CancellationToken)
                 ?? throw new InvalidOperationException();
 
             return SettingsProvider.Get(sourceText.ToString());
         }
 
         private static void ReportDiagnostic(
-            SyntaxTreeAnalysisContext context,
+            SyntaxTreeAnalysisContext syntaxTreeAnalysisContext,
             int maximumLineLength,
             TextLine textLine,
             int lineLength)
         {
-            Location location = Location.Create(context.Tree, textLine.Span);
+            Location location = Location.Create(syntaxTreeAnalysisContext.Tree, textLine.Span);
 
             Diagnostic diagnostic = Diagnostic
                 .Create(LLG001Info.Rule, location, maximumLineLength, lineLength);
 
-            context.ReportDiagnostic(diagnostic);
+            syntaxTreeAnalysisContext.ReportDiagnostic(diagnostic);
         }
     }
 }
