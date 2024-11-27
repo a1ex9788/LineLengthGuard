@@ -12,6 +12,8 @@ namespace LineLengthGuard.Tests.UnitTests.Logic.Utilities
         [DataRow("<see cref=\"Namespace.ClassReference\"/>")]
         [DataRow("<see cref=\"A.Namespace.ClassReference\"/>")]
         [DataRow("<see cref=\"MethodReference()\"/>")]
+        [DataRow("<see cref=\"MethodReference(ParameterType1)\"/>")]
+        [DataRow("<see cref=\"MethodReference(ParameterType1, ParameterType2)\"/>")]
         [DataRow("<see cref=\"Class.MethodReference()\"/>")]
         [DataRow("<see cref=\"Namespace.Class.MethodReference()\"/>")]
         [DataRow("///    <see cref=\"ClassReference\"/>")]
@@ -32,7 +34,6 @@ namespace LineLengthGuard.Tests.UnitTests.Logic.Utilities
 
         [DataTestMethod]
         [DataRow("<see />")]
-        [DataRow("<see cref=\"Class Reference\"/>")]
         [DataRow("<cref=\"ClassReference\"/>")]
         [DataRow("<see cref=\"ClassReference\"")]
         [DataRow("see cref=\"ClassReference\"/>")]
