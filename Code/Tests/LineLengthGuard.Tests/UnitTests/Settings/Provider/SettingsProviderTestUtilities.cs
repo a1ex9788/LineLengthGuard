@@ -2,6 +2,7 @@ using LineLengthGuard.Settings;
 using LineLengthGuard.Settings.Provider;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text.Json;
 
 namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
 {
@@ -9,6 +10,11 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
     {
         private static readonly FieldInfo SettingsByFileField = typeof(SettingsProvider)
             .GetField("settingsByFile", BindingFlags.NonPublic | BindingFlags.Instance)!;
+
+        public static string GetSettingsJSON(ISettings settings)
+        {
+            return JsonSerializer.Serialize(settings);
+        }
 
         public static Dictionary<int, ISettings> GetSettingsByFileField(SettingsProvider settingsProvider)
         {

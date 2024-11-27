@@ -39,7 +39,7 @@ using System.Diagnostics.CodeAnalysis;
     "S100:Methods and properties should be named in PascalCase",
     Justification = "JSON is an acronym.",
     Scope = "member",
-    Target = "~M:LineLengthGuard.Tests.UnitTests.Settings.Provider.SettingsProviderTests" +
+    Target = "~M:LineLengthGuard.Tests.UnitTests.Settings.Provider.SettingsProviderTestUtilities" +
         ".GetSettingsJSON(LineLengthGuard.Settings.ISettings)~System.String")]
 [assembly: SuppressMessage(
     "Naming",

@@ -5,7 +5,6 @@ using LineLengthGuard.Settings.Provider;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
 {
@@ -18,7 +17,7 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
             // Arrange.
             FileSettings expectedSettings = new FileSettings { MaximumLineLength = 5 };
 
-            string settingsJSON = GetSettingsJSON(expectedSettings);
+            string settingsJSON = SettingsProviderTestUtilities.GetSettingsJSON(expectedSettings);
 
             SettingsProvider settingsProvider = new SettingsProvider(new SettingsParser());
 
@@ -72,7 +71,7 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
             // Arrange.
             FileSettings expectedSettings = new FileSettings();
 
-            string settingsJSON = GetSettingsJSON(expectedSettings);
+            string settingsJSON = SettingsProviderTestUtilities.GetSettingsJSON(expectedSettings);
 
             SettingsProvider settingsProvider = new SettingsProvider(new SettingsParser());
 
@@ -122,11 +121,6 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
                 .GetSettingsByFileField(settingsProvider)
                 .Should()
                 .BeEquivalentTo(settingsByFile);
-        }
-
-        private static string GetSettingsJSON(ISettings settings)
-        {
-            return JsonSerializer.Serialize(settings);
         }
     }
 }
