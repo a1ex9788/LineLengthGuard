@@ -76,13 +76,17 @@ namespace LineLengthGuard
 
             if (settingsFiles.Length > 1)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException(
+                    $"More than one settings file found: {string.Join(", ", settingsFiles.Select(at => at.Path))}");
             }
 
-            SourceText sourceText = settingsFiles.Single().GetText(syntaxTreeAnalysisContext.CancellationToken)
-                ?? throw new InvalidOperationException();
+            AdditionalText settingsFile = settingsFiles.Single();
 
-            return SettingsProvider.Get(sourceText.ToString());
+            SourceText settingsFileContent = settingsFile.GetText(syntaxTreeAnalysisContext.CancellationToken)
+                ?? throw new InvalidOperationException(
+                    $"Content of settings file '{settingsFile.Path}' could not be read.");
+
+            return SettingsProvider.Get(settingsFileContent.ToString());
         }
 
         private static void ReportDiagnostic(
