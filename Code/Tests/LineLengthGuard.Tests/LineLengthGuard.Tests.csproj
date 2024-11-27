@@ -4,13 +4,20 @@
     <AssemblyName>LineLengthGuard.Tests</AssemblyName>
   </PropertyGroup>
 
+  <!-- Tests. -->
   <ItemGroup>
     <PackageReference Include="FluentAssertions" />
     <PackageReference Include="Microsoft.CodeAnalysis" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.MSTest" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
     <PackageReference Include="MSTest.TestAdapter" />
     <PackageReference Include="MSTest.TestFramework" />
+    <PackageReference Include="NSubstitute" />
+  </ItemGroup>
+
+  <!-- Analysers. -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Analyzer.Testing.MSTest" PrivateAssets="All" />
+    <PackageReference Include="NSubstitute.Analyzers.CSharp" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>

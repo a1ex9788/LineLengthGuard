@@ -1,7 +1,10 @@
+using Microsoft.CodeAnalysis;
+using System.Threading;
+
 namespace LineLengthGuard.Settings.Provider
 {
     internal interface ISettingsProvider
     {
-        ISettings Get(string settingsJSON);
+        ISettings Get(AdditionalText settingsFile, CancellationToken cancellationToken);
     }
 }

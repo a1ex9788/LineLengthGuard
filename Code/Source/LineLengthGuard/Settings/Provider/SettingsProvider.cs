@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using LineLengthGuard.Settings.Parser;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
 
 namespace LineLengthGuard.Settings.Provider
 {
     internal sealed class SettingsProvider : ISettingsProvider
     {
-        private readonly Dictionary<int, ISettings> settingsByFile = [];
+        private readonly Dictionary<string, ISettings> settingsByFilePath = [];
 
         private readonly ISettingsParser settingsParser;
 
@@ -15,24 +18,31 @@ namespace LineLengthGuard.Settings.Provider
             this.settingsParser = settingsParser;
         }
 
-        public ISettings Get(string settingsJSON)
+        public ISettings Get(AdditionalText settingsFile, CancellationToken cancellationToken)
         {
-            int hashCode = StringComparer.Ordinal.GetHashCode(settingsJSON);
-
-            this.settingsByFile.TryGetValue(hashCode, out ISettings cachedSettings);
+            this.settingsByFilePath.TryGetValue(settingsFile.Path, out ISettings cachedSettings);
 
             if (cachedSettings is not null)
             {
                 return cachedSettings;
             }
 
-            ISettings? settings = this.settingsParser.Parse(settingsJSON);
+            ISettings settings = this.GetSettings(settingsFile, cancellationToken);
 
-            settings ??= new FileSettings();
-
-            this.settingsByFile[hashCode] = settings;
+            this.settingsByFilePath[settingsFile.Path] = settings;
 
             return settings;
+        }
+
+        private ISettings GetSettings(AdditionalText settingsFile, CancellationToken cancellationToken)
+        {
+            SourceText settingsFileContent = settingsFile.GetText(cancellationToken)
+                ?? throw new InvalidOperationException(
+                    $"Content of settings file '{settingsFile.Path}' could not be read.");
+
+            ISettings? settings = this.settingsParser.Parse(settingsFileContent.ToString());
+
+            return settings ?? new FileSettings();
         }
     }
 }

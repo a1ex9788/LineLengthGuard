@@ -2,125 +2,144 @@ using FluentAssertions;
 using LineLengthGuard.Settings;
 using LineLengthGuard.Settings.Parser;
 using LineLengthGuard.Settings.Provider;
+using Microsoft.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NSubstitute;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading;
 
 namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
 {
     [TestClass]
     public class SettingsProviderTests
     {
+        private readonly string settingsFilePath = Path.Combine("A:", "Directory", "SettingsFile.txt");
+        private readonly string anotherSettingsFilePath = Path.Combine("A:", "AnotherDirectory", "SettingsFile.txt");
+
         [TestMethod]
         public void Get_SettingsNotCachedAndValidJSON_ParsesSettingsAndReturnsIt()
         {
             // Arrange.
-            FileSettings expectedSettings = new FileSettings { MaximumLineLength = 5 };
+            ISettings expectedSettings = Substitute.For<ISettings>();
+            expectedSettings.MaximumLineLength.Returns(5);
 
-            string settingsJSON = SettingsProviderTestUtilities.GetSettingsJSON(expectedSettings);
+            AdditionalText settingsFile = SettingsProviderTestUtilities
+                .GetSettingsFile(this.settingsFilePath, expectedSettings);
 
             SettingsProvider settingsProvider = new SettingsProvider(new SettingsParser());
 
             // Act.
-            ISettings? cachedSettings = settingsProvider.Get(settingsJSON);
+            ISettings? cachedSettings = settingsProvider.Get(settingsFile, CancellationToken.None);
 
             // Assert.
             cachedSettings.Should().BeEquivalentTo(expectedSettings);
 
-            Dictionary<int, ISettings> expectedSettingsByFile = new Dictionary<int, ISettings>
-            {
-                { StringComparer.Ordinal.GetHashCode(settingsJSON), expectedSettings },
-            };
+            Dictionary<string, ISettings> expectedSettingsByFilePath =
+                new Dictionary<string, ISettings>(StringComparer.Ordinal)
+                {
+                    { this.settingsFilePath, expectedSettings },
+                };
 
             SettingsProviderTestUtilities
-                .GetSettingsByFileField(settingsProvider)
+                .GetSettingsByFilePathField(settingsProvider)
                 .Should()
-                .BeEquivalentTo(expectedSettingsByFile);
+                .BeEquivalentTo(expectedSettingsByFilePath);
         }
 
         [TestMethod]
         public void Get_SettingsNotCachedAndInvalidJSON_ReturnsDefaultSettings()
         {
             // Arrange.
-            FileSettings expectedSettings = new FileSettings();
+            ISettings expectedSettings = Substitute.For<ISettings>();
 
-            string settingsJSON = "Invalid JSON";
+            AdditionalText settingsFile = SettingsProviderTestUtilities
+                .GetSettingsFile(this.settingsFilePath, expectedSettings);
 
             SettingsProvider settingsProvider = new SettingsProvider(new SettingsParser());
 
             // Act.
-            ISettings? cachedSettings = settingsProvider.Get(settingsJSON);
+            ISettings? settings = settingsProvider.Get(settingsFile, CancellationToken.None);
 
             // Assert.
-            cachedSettings.Should().Be(expectedSettings);
+            settings.Should().BeEquivalentTo(expectedSettings);
 
-            Dictionary<int, ISettings> expectedSettingsByFile = new Dictionary<int, ISettings>
-            {
-                { StringComparer.Ordinal.GetHashCode(settingsJSON), expectedSettings },
-            };
+            Dictionary<string, ISettings> expectedSettingsByFilePath =
+                new Dictionary<string, ISettings>(StringComparer.Ordinal)
+                {
+                    { this.settingsFilePath, settings },
+                };
 
             SettingsProviderTestUtilities
-                .GetSettingsByFileField(settingsProvider)
+                .GetSettingsByFilePathField(settingsProvider)
                 .Should()
-                .BeEquivalentTo(expectedSettingsByFile);
+                .BeEquivalentTo(expectedSettingsByFilePath);
         }
 
         [TestMethod]
         public void Get_SettingsCachedAndValidJSON_ReturnsCachedSettings()
         {
             // Arrange.
-            FileSettings expectedSettings = new FileSettings();
+            ISettings expectedSettings = Substitute.For<ISettings>();
+            expectedSettings.MaximumLineLength.Returns(5);
 
-            string settingsJSON = SettingsProviderTestUtilities.GetSettingsJSON(expectedSettings);
+            AdditionalText settingsFile = SettingsProviderTestUtilities
+                .GetSettingsFile(this.settingsFilePath, expectedSettings);
 
             SettingsProvider settingsProvider = new SettingsProvider(new SettingsParser());
 
-            Dictionary<int, ISettings> settingsByFile = new Dictionary<int, ISettings>
-            {
-                { StringComparer.Ordinal.GetHashCode(settingsJSON), expectedSettings },
-                { 123_456_789, new FileSettings { MaximumLineLength = 5 } },
-            };
-            SettingsProviderTestUtilities.SetSettingsByFileField(settingsProvider, settingsByFile);
+            Dictionary<string, ISettings> settingsByFilePath =
+                new Dictionary<string, ISettings>(StringComparer.Ordinal)
+                {
+                    { this.settingsFilePath, expectedSettings },
+                    { this.anotherSettingsFilePath, Substitute.For<ISettings>() },
+                };
+
+            SettingsProviderTestUtilities.SetSettingsByFilePathField(settingsProvider, settingsByFilePath);
 
             // Act.
-            ISettings? cachedSettings = settingsProvider.Get(settingsJSON);
+            ISettings? settings = settingsProvider.Get(settingsFile, CancellationToken.None);
 
             // Assert.
-            cachedSettings.Should().Be(expectedSettings);
+            settings.Should().Be(expectedSettings);
 
             SettingsProviderTestUtilities
-                .GetSettingsByFileField(settingsProvider)
+                .GetSettingsByFilePathField(settingsProvider)
                 .Should()
-                .BeEquivalentTo(settingsByFile);
+                .BeEquivalentTo(settingsByFilePath);
         }
 
         [TestMethod]
         public void Get_SettingsCachedAndInvalidJSON_ReturnsDefaultCachedSettings()
         {
             // Arrange.
-            FileSettings expectedSettings = new FileSettings();
+            ISettings expectedSettings = Substitute.For<ISettings>();
 
-            string settingsJSON = "Invalid JSON";
+            AdditionalText settingsFile = SettingsProviderTestUtilities
+                .GetSettingsFile(this.settingsFilePath, expectedSettings);
 
             SettingsProvider settingsProvider = new SettingsProvider(new SettingsParser());
 
-            Dictionary<int, ISettings> settingsByFile = new Dictionary<int, ISettings>
-            {
-                { StringComparer.Ordinal.GetHashCode(settingsJSON), expectedSettings },
-                { 123_456_789, new FileSettings { MaximumLineLength = 5 } },
-            };
-            SettingsProviderTestUtilities.SetSettingsByFileField(settingsProvider, settingsByFile);
+            Dictionary<string, ISettings> settingsByFilePath =
+                new Dictionary<string, ISettings>(StringComparer.Ordinal)
+                {
+                    { this.settingsFilePath, expectedSettings },
+                    { this.anotherSettingsFilePath, Substitute.For<ISettings>() },
+                };
+
+            SettingsProviderTestUtilities.SetSettingsByFilePathField(settingsProvider, settingsByFilePath);
 
             // Act.
-            ISettings? cachedSettings = settingsProvider.Get(settingsJSON);
+            ISettings? settings = settingsProvider.Get(settingsFile, CancellationToken.None);
 
             // Assert.
-            cachedSettings.Should().Be(expectedSettings);
+            settings.Should().Be(expectedSettings);
 
             SettingsProviderTestUtilities
-                .GetSettingsByFileField(settingsProvider)
+                .GetSettingsByFilePathField(settingsProvider)
                 .Should()
-                .BeEquivalentTo(settingsByFile);
+                .BeEquivalentTo(settingsByFilePath);
         }
     }
 }

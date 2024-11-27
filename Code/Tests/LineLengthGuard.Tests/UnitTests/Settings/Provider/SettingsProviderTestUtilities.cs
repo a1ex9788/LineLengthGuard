@@ -1,31 +1,42 @@
 using LineLengthGuard.Settings;
 using LineLengthGuard.Settings.Provider;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.Text;
+using NSubstitute;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text.Json;
+using System.Threading;
 
 namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
 {
     internal static class SettingsProviderTestUtilities
     {
-        private static readonly FieldInfo SettingsByFileField = typeof(SettingsProvider)
-            .GetField("settingsByFile", BindingFlags.NonPublic | BindingFlags.Instance)!;
+        private static readonly FieldInfo SettingsByFilePathField = typeof(SettingsProvider)
+            .GetField("settingsByFilePath", BindingFlags.NonPublic | BindingFlags.Instance)!;
 
-        public static string GetSettingsJSON(ISettings settings)
+        public static AdditionalText GetSettingsFile(string settingsFilePath, ISettings settings)
         {
-            return JsonSerializer.Serialize(settings);
+            AdditionalText additionalText = Substitute.For<AdditionalText>();
+
+            additionalText.Path.Returns(settingsFilePath);
+
+            SourceText sourceText = SourceText.From(JsonSerializer.Serialize(settings));
+            additionalText.GetText(Arg.Any<CancellationToken>()).Returns(sourceText);
+
+            return additionalText;
         }
 
-        public static Dictionary<int, ISettings> GetSettingsByFileField(SettingsProvider settingsProvider)
+        public static Dictionary<string, ISettings> GetSettingsByFilePathField(SettingsProvider settingsProvider)
         {
-            return (Dictionary<int, ISettings>)SettingsByFileField.GetValue(settingsProvider)!;
+            return (Dictionary<string, ISettings>)SettingsByFilePathField.GetValue(settingsProvider)!;
         }
 
-        public static void SetSettingsByFileField(
+        public static void SetSettingsByFilePathField(
             SettingsProvider settingsProvider,
-            Dictionary<int, ISettings> value)
+            Dictionary<string, ISettings> value)
         {
-            SettingsByFileField.SetValue(settingsProvider, value);
+            SettingsByFilePathField.SetValue(settingsProvider, value);
         }
     }
 }

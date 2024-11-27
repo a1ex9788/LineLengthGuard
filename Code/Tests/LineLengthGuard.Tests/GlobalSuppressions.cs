@@ -35,13 +35,6 @@ using System.Diagnostics.CodeAnalysis;
     Target = "~M:LineLengthGuard.Tests.UnitTests.Logic.LinesLengthCheckerTests" +
         ".HasAllowedLineLength_NotDefaultExcludedLinePattern_ReturnsFalse(System.String)")]
 [assembly: SuppressMessage(
-    "Minor Code Smell",
-    "S100:Methods and properties should be named in PascalCase",
-    Justification = "JSON is an acronym.",
-    Scope = "member",
-    Target = "~M:LineLengthGuard.Tests.UnitTests.Settings.Provider.SettingsProviderTestUtilities" +
-        ".GetSettingsJSON(LineLengthGuard.Settings.ISettings)~System.String")]
-[assembly: SuppressMessage(
     "Naming",
     "VSSpell001:Spell Check",
     Justification = "It is wanted the name that way to match diagnostic identifier.",
