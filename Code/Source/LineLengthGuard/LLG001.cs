@@ -28,6 +28,7 @@ namespace LineLengthGuard
                 throw new ArgumentNullException(nameof(context));
             }
 
+            // TODO: Create LLG002 to analyse generated code.
             context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 
             context.EnableConcurrentExecution();
