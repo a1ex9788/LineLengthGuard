@@ -13,10 +13,11 @@ using System.Linq;
 
 namespace LineLengthGuard
 {
+    // A different instance of this class is executed for every code document.
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class LLG001 : DiagnosticAnalyzer
     {
-        // Static field holds an instance to avoid recreating the object.
+        // Static field holds an instance in order to share it among the analysis of all files.
         private static readonly SettingsProvider SettingsProvider = new SettingsProvider(new SettingsParser());
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => LLG001Info.SupportedDiagnostics;
@@ -33,7 +34,6 @@ namespace LineLengthGuard
 
             context.EnableConcurrentExecution();
 
-            // Registered action is executed once for every code document.
             context.RegisterSyntaxTreeAction(AnalyzeSyntaxTree);
         }
 
@@ -46,6 +46,8 @@ namespace LineLengthGuard
 
             ISettings settings = GetSettings(syntaxTreeAnalysisContext);
 
+            // A different instance is created for every code document. It is not shared to avoid concurrency problems,
+            // since it has to be created once settings are obtained.
             LinesLengthChecker linesLengthChecker = new LinesLengthChecker(
                 settings,
                 new MethodNamesChecker(settings),
