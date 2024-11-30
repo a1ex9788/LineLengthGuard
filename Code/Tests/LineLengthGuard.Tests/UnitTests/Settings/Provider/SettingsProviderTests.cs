@@ -49,32 +49,24 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
         }
 
         [TestMethod]
-        public void Get_SettingsNotCachedAndInvalidJSON_ReturnsDefaultSettings()
+        public void Get_SettingsNotCachedAndInvalidJSON_ThrowsException()
         {
             // Arrange.
-            ISettings expectedSettings = Substitute.For<ISettings>();
+            string settingsFileContent = "Invalid JSON.";
 
             AdditionalText settingsFile = SettingsProviderTestUtilities
-                .GetSettingsFile(this.settingsFilePath, expectedSettings);
+                .GetSettingsFile(this.settingsFilePath, settingsFileContent);
 
             SettingsProvider settingsProvider = new SettingsProvider(new SettingsParser());
 
             // Act.
-            ISettings? settings = settingsProvider.Get(settingsFile, CancellationToken.None);
+            Action action = () => settingsProvider.Get(settingsFile, CancellationToken.None);
 
             // Assert.
-            settings.Should().BeEquivalentTo(expectedSettings);
-
-            Dictionary<string, ISettings> expectedSettingsByFilePath =
-                new Dictionary<string, ISettings>(StringComparer.Ordinal)
-                {
-                    { this.settingsFilePath, settings },
-                };
-
-            SettingsProviderTestUtilities
-                .GetSettingsByFilePathField(settingsProvider)
+            action
                 .Should()
-                .BeEquivalentTo(expectedSettingsByFilePath);
+                .Throw<InvalidOperationException>()
+                .WithMessage($"Content of settings file '{this.settingsFilePath}' has an invalid format.");
         }
 
         [TestMethod]
@@ -83,38 +75,6 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
             // Arrange.
             ISettings expectedSettings = Substitute.For<ISettings>();
             expectedSettings.MaximumLineLength.Returns(5);
-
-            AdditionalText settingsFile = SettingsProviderTestUtilities
-                .GetSettingsFile(this.settingsFilePath, expectedSettings);
-
-            SettingsProvider settingsProvider = new SettingsProvider(new SettingsParser());
-
-            Dictionary<string, ISettings> settingsByFilePath =
-                new Dictionary<string, ISettings>(StringComparer.Ordinal)
-                {
-                    { this.settingsFilePath, expectedSettings },
-                    { this.anotherSettingsFilePath, Substitute.For<ISettings>() },
-                };
-
-            SettingsProviderTestUtilities.SetSettingsByFilePathField(settingsProvider, settingsByFilePath);
-
-            // Act.
-            ISettings? settings = settingsProvider.Get(settingsFile, CancellationToken.None);
-
-            // Assert.
-            settings.Should().Be(expectedSettings);
-
-            SettingsProviderTestUtilities
-                .GetSettingsByFilePathField(settingsProvider)
-                .Should()
-                .BeEquivalentTo(settingsByFilePath);
-        }
-
-        [TestMethod]
-        public void Get_SettingsCachedAndInvalidJSON_ReturnsDefaultCachedSettings()
-        {
-            // Arrange.
-            ISettings expectedSettings = Substitute.For<ISettings>();
 
             AdditionalText settingsFile = SettingsProviderTestUtilities
                 .GetSettingsFile(this.settingsFilePath, expectedSettings);

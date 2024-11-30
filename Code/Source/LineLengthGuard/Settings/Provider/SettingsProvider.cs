@@ -40,9 +40,9 @@ namespace LineLengthGuard.Settings.Provider
                 ?? throw new InvalidOperationException(
                     $"Content of settings file '{settingsFile.Path}' could not be read.");
 
-            ISettings? settings = this.settingsParser.Parse(settingsFileContent.ToString());
-
-            return settings ?? new FileSettings();
+            return this.settingsParser.Parse(settingsFileContent.ToString())
+                ?? throw new InvalidOperationException(
+                    $"Content of settings file '{settingsFile.Path}' has an invalid format.");
         }
     }
 }

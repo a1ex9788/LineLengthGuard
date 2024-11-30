@@ -17,11 +17,16 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
 
         public static AdditionalText GetSettingsFile(string settingsFilePath, ISettings settings)
         {
+            return GetSettingsFile(settingsFilePath, JsonSerializer.Serialize(settings));
+        }
+
+        public static AdditionalText GetSettingsFile(string settingsFilePath, string settingsFileContent)
+        {
             AdditionalText additionalText = Substitute.For<AdditionalText>();
 
             additionalText.Path.Returns(settingsFilePath);
 
-            SourceText sourceText = SourceText.From(JsonSerializer.Serialize(settings));
+            SourceText sourceText = SourceText.From(settingsFileContent);
             additionalText.GetText(Arg.Any<CancellationToken>()).Returns(sourceText);
 
             return additionalText;
