@@ -7,7 +7,7 @@ namespace LineLengthGuard.Logic.Utilities
         private readonly ISettings settings;
 
         public StringDefinitionsChecker(ISettings settings)
-            : base("^(\\s)*(\\$|@|\\$@|@\\$){0,1}\".+\";$")
+            : base("^(\\s)*(\\$|@|\\$@|@\\$){0,1}\".+\"(,|;)$")
         {
             this.settings = settings;
         }
