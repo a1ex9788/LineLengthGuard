@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NSubstitute;
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.IO;
 using System.Threading;
 
@@ -36,11 +36,10 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
             // Assert.
             cachedSettings.Should().BeEquivalentTo(expectedSettings);
 
-            Dictionary<string, ISettings> expectedSettingsByFilePath =
-                new Dictionary<string, ISettings>(StringComparer.Ordinal)
-                {
-                    { this.settingsFilePath, expectedSettings },
-                };
+            ConcurrentDictionary<string, ISettings> expectedSettingsByFilePath =
+                new ConcurrentDictionary<string, ISettings>(StringComparer.Ordinal);
+
+            expectedSettingsByFilePath.TryAdd(this.settingsFilePath, expectedSettings);
 
             SettingsProviderTestUtilities
                 .GetSettingsByFilePathField(settingsProvider)
@@ -81,12 +80,11 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
 
             SettingsProvider settingsProvider = new SettingsProvider(new SettingsParser());
 
-            Dictionary<string, ISettings> settingsByFilePath =
-                new Dictionary<string, ISettings>(StringComparer.Ordinal)
-                {
-                    { this.settingsFilePath, expectedSettings },
-                    { this.anotherSettingsFilePath, Substitute.For<ISettings>() },
-                };
+            ConcurrentDictionary<string, ISettings> settingsByFilePath =
+                new ConcurrentDictionary<string, ISettings>(StringComparer.Ordinal);
+
+            settingsByFilePath.TryAdd(this.settingsFilePath, expectedSettings);
+            settingsByFilePath.TryAdd(this.anotherSettingsFilePath, Substitute.For<ISettings>());
 
             SettingsProviderTestUtilities.SetSettingsByFilePathField(settingsProvider, settingsByFilePath);
 

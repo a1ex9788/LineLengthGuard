@@ -3,7 +3,7 @@ using LineLengthGuard.Settings.Provider;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
 using NSubstitute;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Reflection;
 using System.Text.Json;
 using System.Threading;
@@ -32,14 +32,15 @@ namespace LineLengthGuard.Tests.UnitTests.Settings.Provider
             return additionalText;
         }
 
-        public static Dictionary<string, ISettings> GetSettingsByFilePathField(SettingsProvider settingsProvider)
+        public static ConcurrentDictionary<string, ISettings> GetSettingsByFilePathField(
+            SettingsProvider settingsProvider)
         {
-            return (Dictionary<string, ISettings>)SettingsByFilePathField.GetValue(settingsProvider)!;
+            return (ConcurrentDictionary<string, ISettings>)SettingsByFilePathField.GetValue(settingsProvider)!;
         }
 
         public static void SetSettingsByFilePathField(
             SettingsProvider settingsProvider,
-            Dictionary<string, ISettings> value)
+            ConcurrentDictionary<string, ISettings> value)
         {
             SettingsByFilePathField.SetValue(settingsProvider, value);
         }

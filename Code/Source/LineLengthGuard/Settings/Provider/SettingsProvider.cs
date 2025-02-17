@@ -1,5 +1,5 @@
 using System;
-using System.Collections.Generic;
+using System.Collections.Concurrent;
 using System.Threading;
 using LineLengthGuard.Settings.Parser;
 using Microsoft.CodeAnalysis;
@@ -9,7 +9,7 @@ namespace LineLengthGuard.Settings.Provider
 {
     internal sealed class SettingsProvider : ISettingsProvider
     {
-        private readonly Dictionary<string, ISettings> settingsByFilePath = [];
+        private readonly ConcurrentDictionary<string, ISettings> settingsByFilePath = [];
 
         private readonly ISettingsParser settingsParser;
 
