@@ -68,9 +68,8 @@ namespace LineLengthGuard
 
         private static ISettings GetSettings(SyntaxTreeAnalysisContext syntaxTreeAnalysisContext)
         {
-            AdditionalText[] settingsFiles = syntaxTreeAnalysisContext.Options.AdditionalFiles
-                .Where(at => Path.GetFileName(at.Path) == Constants.SettingsFileName)
-                .ToArray();
+            AdditionalText[] settingsFiles = [.. syntaxTreeAnalysisContext.Options.AdditionalFiles
+                .Where(at => Path.GetFileName(at.Path) == Constants.SettingsFileName)];
 
             if (settingsFiles.Length == 0)
             {

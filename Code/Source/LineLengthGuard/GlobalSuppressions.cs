@@ -63,3 +63,10 @@ using System.Diagnostics.CodeAnalysis;
     Justification = "It is needed to avoid S3263.",
     Scope = "member",
     Target = "~F:LineLengthGuard.LLG001Info.Rule")]
+[assembly: SuppressMessage(
+    "Style",
+    "MA0007:Add a comma after the last value",
+    Justification = "It is a false positive.",
+    Scope = "member",
+    Target = "~M:LineLengthGuard.LLG001.GetSettings(Microsoft.CodeAnalysis.Diagnostics.SyntaxTreeAnalysisContext)" +
+        "~LineLengthGuard.Settings.ISettings")]
